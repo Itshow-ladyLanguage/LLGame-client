@@ -17,16 +17,16 @@ const Login = () => {
           padding: "20px",
           borderRadius: "72px",
           width: "892px",
-          height: "681px",
+          height: "612px",
           border: "3px solid #850E35",
         }}
       >
         <div
           style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            marginTop: '280px',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            marginTop: "250px",
           }}
         >
           <input
@@ -34,7 +34,7 @@ const Login = () => {
             placeholder="이름을 적어주세요."
             className="input-box"
             style={{
-              marginBottom: "20px"
+              marginBottom: "20px",
             }}
           />
           <input
@@ -43,6 +43,28 @@ const Login = () => {
             className="input-box"
           />
         </div>
+        <button
+          type="submit"
+          style={{
+            width: "169px",
+            height: "64px",
+            borderRadius: "50px",
+            backgroundColor: "#F7F7F7",
+            border: "3px solid #EE6983",
+            outline: "none",
+            color: "#EE6983",
+            fontSize: "30px",
+            fontFamily: "'Pretendard-Regular', sans-serif",
+            fontWeight: 700,
+            textAlign: "center",
+            marginLeft: "auto", // 오른쪽 배치
+            display: "block",
+            marginTop: "50px",
+            marginRight: "10%"
+          }}
+        >
+        시작하기
+        </button>
       </div>
     </div>
   );
