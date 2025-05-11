@@ -1,0 +1,22 @@
+.btn-container {
+    display: flex;
+    justify-content: flex-end; /* 버튼들을 오른쪽 정렬 */
+    width: 100%;
+    margin-top: 58.5%;
+  }
+  
+  .button {
+    width: 169px;
+    height: 64px;
+    border-radius: 50px;
+    background-color: #F7F7F7;
+    border: 3px solid #EE6983;
+    outline: none;
+    color: #EE6983;
+    font-size: 30px;
+    font-family: 'Pretendard-Regular', sans-serif;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+  }
+  

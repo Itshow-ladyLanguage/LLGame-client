@@ -1,7 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
 const Login = () => {
+  const navigate = useNavigate();
   return (
     <div
       style={{
@@ -24,9 +26,32 @@ const Login = () => {
         <div
           style={{
             display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <button
+            onClick={() => navigate("/camera")}
+            style={{
+              backgroundColor: "#FFD6F3",
+              border: "3px solid #850E35",
+              borderRadius: "50%",
+              width: "134px",
+              height: "134px",
+              cursor: "pointer",
+              marginTop: "30px",
+              backgroundImage: "url('/images/camera.png')",
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center"
+            }}
+          ></button>
+        </div>
+        <div
+          style={{
+            display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            marginTop: "250px",
+            marginTop: "100px",
           }}
         >
           <input
@@ -60,10 +85,11 @@ const Login = () => {
             marginLeft: "auto", // 오른쪽 배치
             display: "block",
             marginTop: "50px",
-            marginRight: "10%"
+            marginRight: "10%",
+            cursor: "pointer",
           }}
         >
-        시작하기
+          시작하기
         </button>
       </div>
     </div>
