@@ -21,6 +21,25 @@ const Camera = () => {
           border: "3px solid #850E35",
         }}
       >
+        <div
+          className="btn-container">
+          <button
+          type="submit"
+          className="button"
+          style={{
+            marginRight: "13px"
+          }}>
+            취소
+          </button>
+          <button
+          type="submit"
+          className="button"
+          style={{
+            marginRight: "10%"
+          }}>
+            완료
+          </button>
+        </div>
       </div>
     </div>
   );
