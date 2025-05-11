@@ -34,37 +34,13 @@ const Login = () => {
             placeholder="이름을 적어주세요."
             className="input-box"
             style={{
-              width: "720px",
-              height: "94px",
-              borderRadius: "50px",
-              backgroundColor: "#FFCEF0",
-              border: "3px solid #850E35",
-              marginBottom: "20px",
-              fontSize: "24px",
-              paddingLeft: "30px",
-              boxSizing: "border-box",
-              color: "#A4546E",
-              fontFamily: "'Pretendard-Regular', sans-serif",
-              outline: "none"
+              marginBottom: "20px"
             }}
           />
           <input
             type="tel"
             placeholder="전화번호를 적어주세요. (선택 / 상위 3등 시 선물 제공 목적)"
             className="input-box"
-            style={{
-              width: "720px",
-              height: "94px",
-              borderRadius: "50px",
-              backgroundColor: "#FFCEF0",
-              border: "3px solid #850E35",
-              fontSize: "24px",
-              paddingLeft: "30px",
-              boxSizing: "border-box",
-              color: "#A4546E",
-              fontFamily: "'Pretendard-Regular', sans-serif",
-              outline: "none"
-            }}
           />
         </div>
       </div>
