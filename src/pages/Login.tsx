@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
 const Login = () => {
+  const navigate = useNavigate();
   return (
     <div
       style={{
@@ -30,6 +31,7 @@ const Login = () => {
           }}
         >
           <button
+            onClick={() => navigate("/camera")}
             style={{
               backgroundColor: "#FFD6F3",
               border: "3px solid #850E35",
@@ -44,7 +46,6 @@ const Login = () => {
             }}
           ></button>
         </div>
-
         <div
           style={{
             display: "flex",
