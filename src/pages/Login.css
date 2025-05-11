@@ -1,12 +1,26 @@
 @font-face {
-    font-family: 'Pretendard-Regular';
-    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
+  font-family: "Pretendard-Regular";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+.input-box {
+  width: 720px;
+  height: 94px;
+  border-radius: 50px;
+  background-color: #ffcef0;
+  border: 3px solid #850e35;
+  font-size: 24px;
+  padding-left: 30px;
+  box-sizing: border-box;
+  color: #a4546e;
+  font-family: "Pretendard-Regular", sans-serif;
+  outline: none;
 }
 
 .input-box::placeholder {
-    color: #A4546E;
-    opacity: 1;
-    font-family: 'Pretendard-Regular', sans-serif;
-  }
+  color: #a4546e;
+  font-family: "Pretendard-Regular", sans-serif;
+}

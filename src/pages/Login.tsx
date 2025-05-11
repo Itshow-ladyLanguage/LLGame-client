@@ -17,16 +17,16 @@ const Login = () => {
           padding: "20px",
           borderRadius: "72px",
           width: "892px",
-          height: "681px",
+          height: "612px",
           border: "3px solid #850E35",
         }}
       >
         <div
           style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            marginTop: '280px',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            marginTop: "250px",
           }}
         >
           <input
@@ -34,39 +34,37 @@ const Login = () => {
             placeholder="이름을 적어주세요."
             className="input-box"
             style={{
-              width: "720px",
-              height: "94px",
-              borderRadius: "50px",
-              backgroundColor: "#FFCEF0",
-              border: "3px solid #850E35",
               marginBottom: "20px",
-              fontSize: "24px",
-              paddingLeft: "30px",
-              boxSizing: "border-box",
-              color: "#A4546E",
-              fontFamily: "'Pretendard-Regular', sans-serif",
-              outline: "none"
             }}
           />
           <input
             type="tel"
             placeholder="전화번호를 적어주세요. (선택 / 상위 3등 시 선물 제공 목적)"
             className="input-box"
-            style={{
-              width: "720px",
-              height: "94px",
-              borderRadius: "50px",
-              backgroundColor: "#FFCEF0",
-              border: "3px solid #850E35",
-              fontSize: "24px",
-              paddingLeft: "30px",
-              boxSizing: "border-box",
-              color: "#A4546E",
-              fontFamily: "'Pretendard-Regular', sans-serif",
-              outline: "none"
-            }}
           />
         </div>
+        <button
+          type="submit"
+          style={{
+            width: "169px",
+            height: "64px",
+            borderRadius: "50px",
+            backgroundColor: "#F7F7F7",
+            border: "3px solid #EE6983",
+            outline: "none",
+            color: "#EE6983",
+            fontSize: "30px",
+            fontFamily: "'Pretendard-Regular', sans-serif",
+            fontWeight: 700,
+            textAlign: "center",
+            marginLeft: "auto", // 오른쪽 배치
+            display: "block",
+            marginTop: "50px",
+            marginRight: "10%"
+          }}
+        >
+        시작하기
+        </button>
       </div>
     </div>
   );
