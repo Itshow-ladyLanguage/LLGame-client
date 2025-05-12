@@ -18,8 +18,8 @@ const Login = () => {
           backgroundColor: "#E10CA1",
           padding: "20px",
           borderRadius: "72px",
-          width: "892px",
-          height: "612px",
+          width: "700px",
+          height: "500px",
           border: "3px solid #850E35",
         }}
       >
@@ -28,23 +28,29 @@ const Login = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            marginBottom: "-40px",
           }}
         >
-          <button
-            onClick={() => navigate("/camera")}
+          <div style={{
+            backgroundColor: "#FFD6F3",
+            padding: "10px",
+            borderRadius: "100px",
+            width: "110px",
+            height: "110px",
+            border: "3px solid #850E35",
+            marginTop: "25px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}>
+          <img
+            src="/images/camera.png"
             style={{
-              backgroundColor: "#FFD6F3",
-              border: "3px solid #850E35",
-              borderRadius: "50%",
-              width: "134px",
-              height: "134px",
-              cursor: "pointer",
-              marginTop: "30px",
-              backgroundImage: "url('/images/camera.png')",
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "center"
-            }}
-          ></button>
+              width: "48px",
+              height: "43px"
+            }}>
+            </img>
+          </div>
         </div>
         <div
           style={{
@@ -69,22 +75,23 @@ const Login = () => {
           />
         </div>
         <button
+          onClick={() => navigate("/camera")}
           type="submit"
           style={{
-            width: "169px",
-            height: "64px",
+            width: "150px",
+            height: "55px",
             borderRadius: "50px",
             backgroundColor: "#F7F7F7",
             border: "3px solid #EE6983",
             outline: "none",
             color: "#EE6983",
-            fontSize: "30px",
+            fontSize: "25px",
             fontFamily: "'Pretendard-Regular', sans-serif",
             fontWeight: 700,
             textAlign: "center",
             marginLeft: "auto", // 오른쪽 배치
             display: "block",
-            marginTop: "50px",
+            marginTop: "30px",
             marginRight: "10%",
             cursor: "pointer",
           }}
