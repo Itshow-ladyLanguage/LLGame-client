@@ -1,13 +1,20 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Webcam from "react-webcam";
 import "./Camera.css";
 
 const Camera = () => {
   const webcamRef = useRef(null);
+  const [time, setTime] = useState<number>(3);
 
+  // 자신의 컴퓨터 카메라를 쓸 것
   const videoConstraints = {
     facingMode: "user",
   };
+
+  //카운트다운
+  useEffect(() => {
+    time > 0 && setTimeout(() => setTime(time - 1), 1000);
+  }, [time]);
 
   return (
     <div
@@ -42,9 +49,25 @@ const Camera = () => {
             height: "580px",
             borderRadius: "42px",
             objectFit: "cover",
-            marginTop: "60px"
+            marginTop: "60px",
           }}
         />
+        {time > 0 && (
+          <div
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              fontSize: "150px",
+              color: "#FFCEF0",
+              fontWeight: "bold",
+              fontFamily: "'Pretendard-Regular', sans-serif",
+            }}
+          >
+            {time}
+          </div>
+        )}
         <div className="btn-container">
           <button
             type="submit"
