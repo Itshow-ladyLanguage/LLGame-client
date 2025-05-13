@@ -7,12 +7,12 @@
 }
 
 .input-box {
-  width: 720px;
-  height: 94px;
+  width: 570px;
+  height: 80px;
   border-radius: 50px;
   background-color: #ffcef0;
   border: 3px solid #850e35;
-  font-size: 24px;
+  font-size: 20px;
   padding-left: 30px;
   box-sizing: border-box;
   color: #a4546e;
