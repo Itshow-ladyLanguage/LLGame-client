@@ -62,21 +62,21 @@ const Camera = () => {
             mirrored={true}
             videoConstraints={videoConstraints}
             style={{
-              width: "860px",
-              height: "480px",
+              width: "950px",
+              height: "550px",
               borderRadius: "42px",
               objectFit: "cover",
-              marginTop: "60px",
+              marginTop: "20px",
             }}
           />
           <div
             className="overlay"
             style={{
               position: "absolute",
-              top: "60px",
+              top: "20px",
               left: 0,
-              width: "860px",
-              height: "480px",
+              width: "950px",
+              height: "550px",
               borderRadius: "42px",
               overflow: "hidden",
               pointerEvents: "none", // 마우스 터치 이벤트 무시 (이 코드가 없으면 클릭이 오버레이에서 먹혀서 버튼이나 웹캠 캡처가 안 될수도 있음)
@@ -89,8 +89,8 @@ const Camera = () => {
                   src={photo}
                   alt="Captured"
                   style={{
-                    width: "860px",
-                    height: "480px",
+                    width: "950px",
+                    height: "550px",
                     objectFit: "cover", // 캡쳐 사진 비율 맞추기
                     borderRadius: "42px",
                   }}
@@ -103,8 +103,8 @@ const Camera = () => {
                 position: "absolute",
                 top: "50%",
                 left: "50%",
-                width: "400px",
-                height: "400px",
+                width: "500px",
+                height: "500px",
                 transform: "translate(-50%, -50%)",
                 borderRadius: "50%",
                 boxShadow: "0 0 0 310px rgba(0, 0, 0, 0.5)",
@@ -150,7 +150,7 @@ const Camera = () => {
             type="submit"
             className="button"
             style={{
-              marginRight: "7%",
+              marginRight: "3%",
             }}
           >
             완료
