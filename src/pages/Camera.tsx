@@ -79,10 +79,24 @@ const Camera = () => {
               height: "480px",
               borderRadius: "42px",
               overflow: "hidden",
-              pointerEvents: "none" /* 마우스 터치 이벤트 무시 (이 코드가 없으면 클릭이 오버레이에서 먹혀서 버튼이나 웹캠 캡처가 안 될수도 있음) */,
+              pointerEvents: "none", // 마우스 터치 이벤트 무시 (이 코드가 없으면 클릭이 오버레이에서 먹혀서 버튼이나 웹캠 캡처가 안 될수도 있음)
               zIndex: 2,
             }}
           >
+            {photo && (
+              <div>
+                <img
+                  src={photo}
+                  alt="Captured"
+                  style={{
+                    width: "860px",
+                    height: "480px",
+                    objectFit: "cover", // 캡쳐 사진 비율 맞추기
+                    borderRadius: "42px",
+                  }}
+                />
+              </div>
+            )}
             <div
               className="circle-camera"
               style={{
