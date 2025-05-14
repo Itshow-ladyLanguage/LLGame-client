@@ -3,18 +3,32 @@ import Webcam from "react-webcam";
 import "./Camera.css";
 
 const Camera = () => {
-  const webcamRef = useRef(null);
-  const [time, setTime] = useState<number>(5);
+  const webcamRef = useRef<Webcam | null>(null);
+  const [timer, setTimer] = useState<number>(5);
+  const [photo, setPhoto] = useState<string | null>(null);
 
   // 자신의 컴퓨터 카메라를 쓸 것
   const videoConstraints = {
     facingMode: "user",
   };
 
-  //카운트다운
+  // 카운트다운
   useEffect(() => {
-    time > 0 && setTimeout(() => setTime(time - 1), 1000);
-  }, [time]);
+    if (timer > 0) {
+      const timerID = setTimeout(() => setTimer(timer - 1), 1000);
+      return () => clearTimeout(timerID);
+    }
+    else if (timer == 0 && webcamRef.current) { // 타이머가 0이고, 웹캠이 참조 가능한 상태인가?
+      const photoSrc = webcamRef.current.getScreenshot();
+      if (photoSrc) {
+        setPhoto(photoSrc);
+
+        const photoLink = document.createElement("a"); // html 'a' 태그를 동적으로 생성
+        photoLink.href = photoSrc;
+        console.log(photoLink.href);
+      }
+    }
+  }, [timer]);
 
   return (
     <div
@@ -86,7 +100,7 @@ const Camera = () => {
           </div>
         </div>
 
-        {time > 0 && (
+        {timer > 0 && (
           <div
             style={{
               position: "absolute",
@@ -100,7 +114,7 @@ const Camera = () => {
               zIndex: 3,
             }}
           >
-            {time}
+            {timer}
           </div>
         )}
 
@@ -110,6 +124,10 @@ const Camera = () => {
             className="button"
             style={{
               marginRight: "13px",
+            }}
+            onClick={() => {
+              setPhoto(null);
+              setTimer(5);
             }}
           >
             다시 찍기
