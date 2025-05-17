@@ -2,6 +2,10 @@ import { useRef, useState, useEffect } from "react";
 import Webcam from "react-webcam";
 import "./Camera.css";
 
+import { fstorage } from "../../firebase/firebase";
+import { ref, uploadString, getDownloadURL } from "firebase/storage";
+import { v4 as uuidv4 } from "uuid";
+
 const Camera = () => {
   const webcamRef = useRef<Webcam | null>(null);
   const [timer, setTimer] = useState<number>(5);
@@ -19,13 +23,23 @@ const Camera = () => {
       return () => clearTimeout(timerID);
     }
     else if (timer == 0 && webcamRef.current) { // 타이머가 0이고, 웹캠이 참조 가능한 상태인가?
-      const photoSrc = webcamRef.current.getScreenshot();
+      const photoSrc = webcamRef.current.getScreenshot(); //웹캠으로 사진찍은 화면을 이미지로 저장
+      
       if (photoSrc) {
         setPhoto(photoSrc);
+        console.log("캡처된 사진:", photoSrc);
 
-        const photoLink = document.createElement("a"); // html 'a' 태그를 동적으로 생성
-        photoLink.href = photoSrc;
-        console.log(photoLink.href);
+        const photoRef = ref(fstorage, `uploads/${uuidv4()}.jpg`); //uuidv4(): 고유한 아이디를 만들어주는 함수
+        uploadString(photoRef, photoSrc, "data_url")
+        //uploadString(): 문자열 형태로 이미지를 저장할 때 사용하는 함수
+        //"data_url": 업로드할 문자열이 data URL 형식임
+          .then((snapshot) => { //snapshot: Firebase Storage에 무엇이 올라갔고, 어디에 저장됐고, 어떤 경로로 접근할 수 있는지 알려줌
+            console.log("업로드 성공: ", snapshot);
+            return getDownloadURL(snapshot.ref);
+          })
+          .catch((err) => {
+            console.error("업로드 실패: ", err);
+          });
       }
     }
   }, [timer]);
