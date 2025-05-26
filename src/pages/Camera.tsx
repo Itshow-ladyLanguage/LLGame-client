@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Webcam from "react-webcam";
 import "./Camera.css";
 
@@ -7,6 +8,7 @@ import { ref, uploadString, getDownloadURL } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 
 const Camera = () => {
+  const navigate = useNavigate();
   const webcamRef = useRef<Webcam | null>(null);
   const [timer, setTimer] = useState<number>(5);
   const [photo, setPhoto] = useState<string | null>(null);
@@ -161,6 +163,7 @@ const Camera = () => {
             다시 찍기
           </button>
           <button
+          onClick={() => navigate("/QuzePages")}
             type="submit"
             className="button"
             style={{
