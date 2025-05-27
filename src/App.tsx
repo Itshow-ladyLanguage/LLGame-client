@@ -6,6 +6,8 @@ import QuzePages from "./pages/QuzePages";
 import RankingPages from "./pages/RankingPages";
 import ResultPages from "./pages/ResultPages";
 import Result from "./components/Result";
+import Subjective from "./components/Subjective";
+import SuQuzePages from "./pages/SuQuzePages";
 const App = () => {
   return (
     <Routes>
@@ -15,6 +17,7 @@ const App = () => {
       <Route path="/RankingPages" element={<RankingPages />} /> {/*랭킹페이지*/}
       <Route path="/Result" element={<Result />} /> {/*결과 페이지*/}
       <Route path="/ResultPages" element={<ResultPages />} /> {/*결과 페이지*/}
+      <Route path="/SuQuzePages" element={<SuQuzePages />} /> {/*결과 페이지*/}
     </Routes>
   );
 };
