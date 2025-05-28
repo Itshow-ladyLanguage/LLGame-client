@@ -1,5 +1,6 @@
 import Timer from "../components/Timer";
 import Bar from "../components/Bar";
+import SubjectiveText from "../components/SubjectiveText"
 import Subjective from "../components/Subjective";
 
 export default function SuQuzePages() {
@@ -18,6 +19,9 @@ export default function SuQuzePages() {
 
       <div style={{ marginTop: "0px" }}>
         <Subjective />
+      </div>
+      <div style={{ margin: "36px"}}>
+        <SubjectiveText />
       </div>
       <div style={{ marginTop: "83.5px" }}>
         <Timer />

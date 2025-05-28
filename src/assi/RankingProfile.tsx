@@ -1,4 +1,11 @@
 import Profile from "./Profile";
+
+interface CoverButtonDesignProps {
+  label: string;
+  onClick?: () => void;
+  labelColor?: string;
+  hoverLabelColor?: string;
+}
 export default function RankingProfile() {
   return (
     <div>
