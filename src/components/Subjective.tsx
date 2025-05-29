@@ -8,7 +8,7 @@ export default function Subjective() {
       <div
         style={{
           width: "1350px",
-          height: "471px",
+          height: "544px",
           border: "3px solid #E10CA1",
           borderRadius: "34px",
           display: "flex", // 가로 정렬
@@ -19,10 +19,10 @@ export default function Subjective() {
       >
         <p
           style={{
-            fontSize: "39px",
+            fontSize: "46px",
             lineHeight: "1.5",
             fontWeight: "bold",
-            marginLeft: "200px",
+            marginLeft: "120px",
             textAlign: "center",
           }}
         >
@@ -33,9 +33,10 @@ export default function Subjective() {
         <img
           src="/images/talk.png"
           style={{
-            width: "472.5px",
-            height: "391.46px",
+            width: "480px",
+            height: "480px",
             objectFit: "contain",
+            marginRight: "20px",
           }}
         />
       </div>
