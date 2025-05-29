@@ -1,5 +1,8 @@
 import { useState } from "react";
 import RankingFrofile from "../assi/RankingProfile";
+import { useNavigate } from "react-router-dom";
+
+
 
 export default function Ranking(props: any) {
   const [isHovered, setIsHovered] = useState(false);

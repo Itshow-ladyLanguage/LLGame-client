@@ -1,6 +1,7 @@
 import Timer from "../components/Timer";
 import Bar from "../components/Bar";
 import Subjective from "../components/Subjective";
+import SubjectiveText from "../components/SuQuzeText";
 
 export default function SuQuzePages() {
   return (
@@ -12,14 +13,16 @@ export default function SuQuzePages() {
         alignItems: "center", // Center horizontally
       }}
     >
-      <div style={{ marginBottom: "74px" }}>
+      <div style={{ marginBottom: "28px" }}>
         <Bar />
       </div>
-
       <div style={{ marginTop: "0px" }}>
         <Subjective />
       </div>
-      <div style={{ marginTop: "83.5px" }}>
+      <div style={{ margin: "36px"}}>
+        <SubjectiveText/>
+      </div>
+      <div style={{ marginTop: "48px" }}>
         <Timer />
       </div>
     </div>
