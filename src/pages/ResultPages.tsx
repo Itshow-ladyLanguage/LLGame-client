@@ -3,7 +3,7 @@ import Result from "../components/Result";
 import html2canvas from "html2canvas";
 
 import { fstorage } from "../../firebase/firebase";
-import { ref, uploadString, getDownloadURL } from "firebase/storage";
+import { ref, uploadString } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 
 export default function ResultPages() {
