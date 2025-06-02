@@ -69,8 +69,8 @@ const Login = () => {
             }}
           />
           <input
-            type="tel"
-            placeholder="전화번호를 적어주세요. (선택 / 상위 3등 시 선물 제공 목적)"
+            type="email"
+            placeholder="이메일을 적어주세요. (테스트 결과 사진 전송 목적)"
             className="input-box"
           />
         </div>
