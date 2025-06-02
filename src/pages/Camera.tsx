@@ -31,7 +31,7 @@ const Camera = () => {
         setPhoto(photoSrc);
         console.log("캡처된 사진:", photoSrc);
 
-        const photoRef = ref(fstorage, `uploads/${uuidv4()}.jpg`); //uuidv4(): 고유한 아이디를 만들어주는 함수
+        const photoRef = ref(fstorage, `uploads/cameraImg/${uuidv4()}.jpg`); //uuidv4(): 고유한 아이디를 만들어주는 함수
         uploadString(photoRef, photoSrc, "data_url")
         //uploadString(): 문자열 형태로 이미지를 저장할 때 사용하는 함수
         //"data_url": 업로드할 문자열이 data URL 형식임
