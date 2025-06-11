@@ -7,12 +7,12 @@ import RankingPages from "./pages/RankingPages";
 import ResultPages from "./pages/ResultPages";
 import Result from "./components/Result";
 import SuQuzePages from "./pages/SuQuzePages";
-import Cover from "./pages/Cover";
+import CoverPages from "./pages/CoverPages";
 import OXQuizPages from "./pages/OXQuizPages";
 const App = () => {
   return (
     <Routes>
-      <Route path="/Cover" element={<Cover/>} /> {/* 첫페이지 */}
+      <Route path="/CoverPages" element={<CoverPages/>} /> {/* 첫페이지 */}
       <Route path="/login" element={<Login />} /> {/* 로그인페이지 */}
       <Route path="/camera" element={<Camera />} /> {/* 사진찍는페이지 */}
       <Route path="/QuzePages" element={<QuzePages />} /> {/*문제객관식*/}
