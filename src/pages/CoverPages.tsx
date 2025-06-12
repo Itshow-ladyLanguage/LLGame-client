@@ -1,19 +1,30 @@
+import CoverButton from "../components/CoverButton";
 
 
 export default function CoverPages() {
   return (
-    <div style={{ position: 'relative' }}>
+    <div 
+      style={{ 
+        position: 'relative',
+        }}>
+      <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
         <span
           style={{
             position: 'absolute',
-            top: '55px',
-            right: '122px',
+            marginTop: '55px',
+            marginLeft: '1550px',
             color: '#E10CA1',
             fontSize: '28.95px',
           }}
         >
           IT SHOW
         </span>
+        </div>
         <div
           style={{
             display: 'flex',
@@ -45,40 +56,46 @@ export default function CoverPages() {
           </div>
         <div
           style={{
-            marginTop: '-600px',
-            marginLeft: '164px',
+            display: 'flex',
+            justifyContent: 'center',
           }}>
           <img 
             src="/Cover/shine1.png"
             style={{
               width: '200px',
               height: '84px',
+              marginTop: '-600px',
+              marginRight: '1400px',
             }}
           />
         </div>
         <div
           style={{
-            marginTop: '-50px',
-            marginLeft: '1496px',
+            display: 'flex',
+            justifyContent: 'center',
           }}>
           <img 
             src="/Cover/planet1.png"
             style={{
               width: '250px',
               height: '149px',
+              marginTop: '-550px',
+              marginLeft: '1300px',
             }}
           />
         </div>
         <div
           style={{
-            marginTop: '200px',
-            marginLeft: '247px',
+            display: 'flex',
+            justifyContent: 'center',
           }}>
           <img 
             src="/Cover/planet2.png"
             style={{
               width: '217px',
               height: '184px',
+              marginTop: '-220px',
+              marginRight: '1200px',
             }}
           />
         </div>
@@ -86,48 +103,55 @@ export default function CoverPages() {
           style={{
             display: 'flex',
             justifyContent: 'center',
-            marginTop: '-270px',
           }}>
           <img 
             src="/Cover/cloud.png"
             style={{
               width: '1920px',
               height: '610px',
+              marginTop: '-270px',
             }}
           />
         </div>
         <div
           style={{
-            marginTop: '-650px',
-            marginLeft: '1382px',
+            display: 'flex',
+            justifyContent: 'center',
           }}>
           <img 
             src="/Cover/shine2.png"
             style={{
               width: '175px',
               height: '98px',
+              marginTop: '-650px',
+              marginLeft: '1100px',
             }}
           />
         </div>
         <div
           style={{
-            marginTop: '160px',
-            marginLeft: '1528px',
+            position: 'absolute', 
+            zIndex: -1, 
+            display: 'flex',
+            justifyContent: 'center',
           }}>
           <img 
             src="/Cover/shine1.png"
             style={{
               width: '200px',
               height: '84px',
+              marginTop: '-400px',
+              marginLeft: '1690px',
             }}
           />
         </div>
-        <div style={{
-            marginLeft: '80px',
-            marginBottom: '50px',
+        <div 
+          style={{
             display: 'flex',
             justifyContent: 'center',
-        }}>
+            marginTop: '-310px',
+          }}>
+          <CoverButton/>
         </div>
     </div>
   );

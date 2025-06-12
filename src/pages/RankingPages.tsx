@@ -25,7 +25,7 @@ export default function RankingPages() {
             gap: "20px",
           }}
         >
-        <div onClick={() => navigate("/Cover")} style={{ cursor: "pointer" }}>
+        <div onClick={() => navigate("/CoverPages")} style={{ cursor: "pointer" }}>
           <img src="/images/arrow.png"
             alt="뒤로 가기"
             style={{
