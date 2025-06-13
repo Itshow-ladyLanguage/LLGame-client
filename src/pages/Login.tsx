@@ -25,7 +25,7 @@ const Login = () => {
       navigate("/camera");
     } catch (e) {
       console.error("유저 생성 실패 : ", e);
-      setError(e);
+      setError(error);
     } finally {
       setLoading(false);
     }
