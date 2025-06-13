@@ -27,7 +27,7 @@ export default function RankingProfile() {
       setUsers(res.data);
     } catch (e) {
       console.error("유저 생성 실패 : ", e);
-      setError(e); //e에서 error로 잠시 변경
+      setError(error); //e에서 error로 잠시 변경
     } finally {
       setLoading(false);
     }

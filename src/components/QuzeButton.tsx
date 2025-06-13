@@ -1,25 +1,47 @@
 import Button from "../assi/Button";
 
-export default function QuzeButton() {
-  return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "57px" }}>
-      <div style={{ display: "flex", gap: "26px" }}>
-        <div style={{ marginRight: "10px" }}>
-          <Button label="나 아이스크림 먹고싶어" />
-        </div>
-        <div>
-          <Button label="빨리 내 마음 읽고 먹던거 사와라" />
-        </div>
-      </div>
+type Props = {
+  answers: {
+    type: string;
+    question: string;
+    answer: string[];
+    score: number[] | number | string;
+  }[];
+};
 
-      <div style={{ display: "flex", gap: "26px" }}>
-        <div style={{ marginRight: "10px" }}>
-          <Button label="우리 자기가 먹고 싶겠징?" />
+export default function QuzeButton({ answers = [] }: Props) {
+  if (answers.length === 0) return null; // 데이터 없으면 아무것도 안 렌더링
+
+  const firstQuiz = answers[0]; // 첫 번째 퀴즈만 사용
+
+  // answer 배열을 2개씩 묶어서 렌더링 준비
+  const groupedAnswers = firstQuiz.answer.reduce<string[][]>((acc, curr, i) => {
+    if (i % 2 === 0) acc.push([curr]);
+    else acc[acc.length - 1].push(curr);
+    return acc;
+  }, []);
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: "57px",
+      }}
+    >
+      {groupedAnswers.map((row, rowIndex) => (
+        <div key={rowIndex} style={{ display: "flex", gap: "26px" }}>
+          {row.map((label, idx) => (
+            <div
+              key={idx}
+              style={{ marginRight: idx === 0 ? "10px" : undefined }}
+            >
+              <Button label={label} />
+            </div>
+          ))}
         </div>
-        <div>
-          <Button label="혼자 먹으면 돼지 같으니까 같이 먹자" />
-        </div>
-      </div>
+      ))}
     </div>
   );
 }
