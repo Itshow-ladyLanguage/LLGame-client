@@ -1,24 +1,34 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Button(props: any) {
   const [isClicked, setIsClicked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const navigate = useNavigate();
+
+  // 커스텀 속성을 타입 단언으로 정의
+  const globalWindow = window as typeof window & {
+    __buttonClicked?: boolean;
+  };
+
+  // 전역 상태 초기화
+  if (globalWindow.__buttonClicked === undefined) {
+    globalWindow.__buttonClicked = false;
+  }
 
   const handleClick = () => {
-    if (!isClicked && !props.isAnyClicked) {
+    if (!isClicked && !globalWindow.__buttonClicked) {
       setIsClicked(true);
-      props.onClick(); // 부모에게 "나 클릭했어!" 알림
+      globalWindow.__buttonClicked = true;
+
+      setTimeout(() => {
+        navigate("/ResultPages"); // 원하는 경로로 이동
+      }, 1500);
     }
   };
 
   return (
-    <div
-      style={{
-        perspective: "1000px",
-        width: "693px",
-        height: "130.5px",
-      }}
-    >
+    <div style={{ perspective: "1000px", width: "693px", height: "130.5px" }}>
       <div
         onClick={handleClick}
         onMouseEnter={() => setIsHovered(true)}
@@ -30,7 +40,8 @@ export default function Button(props: any) {
           transformStyle: "preserve-3d",
           transform: isClicked ? "rotateY(180deg)" : "none",
           transition: "transform 0.8s ease",
-          cursor: isClicked || props.isAnyClicked ? "default" : "pointer",
+          cursor:
+            isClicked || globalWindow.__buttonClicked ? "default" : "pointer",
           borderRadius: "35px",
         }}
       >

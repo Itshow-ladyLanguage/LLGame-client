@@ -1,11 +1,14 @@
 import { useState } from "react";
-import RankingFrofile from "../assi/RankingProfile";
 import { useNavigate } from "react-router-dom";
-
-
+import RankingFrofile from "../assi/RankingProfile";
 
 export default function Ranking(props: any) {
   const [isHovered, setIsHovered] = useState(false);
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/Emo");
+  };
 
   return (
     <div>
@@ -34,6 +37,7 @@ export default function Ranking(props: any) {
           }}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
+          onClick={handleClick}
         >
           <p
             style={{

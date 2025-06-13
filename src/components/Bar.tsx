@@ -1,32 +1,33 @@
-// export default function Bar() { 
+// export default function Bar() {
 //   return (
 //     <div style={{
 //       width: "1579.5px",
 //       height: "15px",
 //       backgroundColor: "#F4F4F4",
 //     }}>
-      
+
 //     </div>
 //   );
 // }
-
-import { useState } from "react";
-
-// 게이지바 컴포넌트 정의
-
+import Timer from "./Timer";
+import { useEffect, useState } from "react";
 
 export default function Bar() {
-  const totalSteps = 12;
   const totalWidth = 1579.5;
-  const stepWidth = totalWidth / totalSteps;
-  const [progress] = useState(1);
+  const totalTime = 60;
+  const [timeLeft, setTimeLeft] = useState(totalTime);
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 12;
+  useEffect(() => {
+    if (timeLeft <= 0) return;
 
-  const handleNextPage = () => {
-    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
-  };
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => Math.max(prev - 1, 0));
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [timeLeft]);
+
+  const progressWidth = (timeLeft / totalTime) * totalWidth;
 
   return (
     <div>
@@ -40,18 +41,24 @@ export default function Bar() {
       >
         <div
           style={{
-            width: `${progress * stepWidth}px`,
+            width: `${progressWidth}px`,
             height: "100%",
             backgroundColor: "#E10CA1",
-            borderTopRightRadius:"8px",
-            borderBottomRightRadius:"8px",
-            transition: "width 0.3s ease",
+            borderTopRightRadius: timeLeft === 0 ? "0px" : "8px",
+            borderBottomRightRadius: timeLeft === 0 ? "0px" : "8px",
+            transition: "width 1s linear",
           }}
         />
       </div>
-      <div style={{ fontSize: "33px", color:"#777777", marginTop: "2px", marginLeft:"11px" }}>
-        {currentPage}/{totalPages}
-        {/* <button onClick={handleNextPage}>다음 페이지</button> */}
+      <div
+        style={{
+          fontSize: "33px",
+          color: "#777777",
+          marginTop: "2px",
+          marginLeft: "11px",
+        }}
+      >
+        <Timer />
       </div>
     </div>
   );
