@@ -17,7 +17,7 @@ export default function Quzelook({ question }: QuzelookProps) {
         textAlign: "center", // 텍스트 중앙 정렬
       }}
     >
-      <p style={{ fontSize: "39px" }}>{question}</p>
+      <p style={{ fontSize: "39px" }}>Q. {question}</p>
     </div>
   );
 }

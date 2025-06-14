@@ -1,7 +1,9 @@
-export default function PageNumber() {
+export default function PageNumber(props: { current: number; total: number }) {
   return (
-    <div style={{}}>
-      <p style={{ fontSize: "31px", color: "#777777" }}>1/12</p>
+    <div>
+      <p style={{ fontSize: "31px", color: "#777777" }}>
+        {props.current} / 12
+      </p>
     </div>
   );
 }
