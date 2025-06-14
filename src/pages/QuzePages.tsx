@@ -71,20 +71,26 @@ export default function QuzeContainer() {
     }
   };
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>퀴즈를 불러오는 데 실패했습니다.</p>;
-  if (quizData.length === 0) return <p>퀴즈가 없습니다.</p>;
+  if (loading) return <p>Loading</p>;
+  if (error) return <p>퀴즈를 불러오는 데 실패했습니다</p>;
+  if (quizData.length === 0) return <p>퀴즈가 없습니다</p>;
 
   const currentQuiz = quizData[currentQuizIndex];
 
   return (
-    <div>
+    <div
+      style={{
+        marginTop: "96px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
       <div style={{ marginBottom: "28px" }}>
         <Bar timeLeft={timeLeft} />
       </div>
       <Quzelook question={currentQuiz.question} />
       <div style={{ marginTop: "87.5px" }}>
-      </div>
       <QuzeButton
         answers={currentQuiz.answer}
         scores={currentQuiz.score as number[]}
@@ -93,6 +99,7 @@ export default function QuzeContainer() {
         }}
         resetTrigger={resetTrigger}
       />
+      </div>
       <PageNumber current={currentQuizIndex + 1} total={quizData.length} />
     </div>
   );

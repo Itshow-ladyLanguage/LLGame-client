@@ -19,6 +19,7 @@ export default function OXQuizPages() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [clicked, setClicked] = useState(false);
   const navigate = useNavigate();
+  const [resetTrigger, setResetTrigger] = useState(0);
 
   useEffect(() => {
     const fetchQuizData = async () => {
@@ -53,11 +54,11 @@ export default function OXQuizPages() {
   const goToNextQuestion = () => {
     setClicked(false);
     setTimeLeft(60);
+    setResetTrigger(prev => prev + 1);
     if (currentIndex + 1 < quizData.length) {
       setCurrentIndex(currentIndex + 1);
     } else {
-      // 문제 끝났을 때 이동
-      navigate("/SuQuzePages"); // 원하시는 경로로 변경하세요
+      navigate("/SuQuzePages");
     }
   };
 
@@ -84,6 +85,7 @@ export default function OXQuizPages() {
           onAnswered={goToNextQuestion}
           clicked={clicked}
           setClicked={setClicked}
+          resetTrigger={resetTrigger}
         />
       </div>
       <PageNumber current={currentIndex + 1} total={quizData.length} />
