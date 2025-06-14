@@ -1,12 +1,26 @@
 import React, { useState } from "react";
 import OXPuizButtonDesign from "../assi/OXPuizButtonDesign";
 
-export default function OXQuizButton() {
+export default function OXQuizButton({
+  answer,
+  onAnswered,
+  clicked,
+  setClicked,
+}: {
+  answer: string;
+  onAnswered: () => void;
+  clicked: boolean;
+  setClicked: (v: boolean) => void;
+}) {
   const [clickedIndex, setClickedIndex] = useState<number | null>(null);
 
   const handleButtonClick = (index: number) => {
-    if (clickedIndex === null) {
+    if (!clicked) {
+      setClicked(true);
       setClickedIndex(index);
+      setTimeout(() => {
+        onAnswered();
+      }, 1000); // 1초 뒤 다음 문제
     }
   };
 
@@ -24,7 +38,7 @@ export default function OXQuizButton() {
           label="O"
           onClick={() => handleButtonClick(0)}
           isClicked={clickedIndex === 0}
-          isAnyClicked={clickedIndex !== null}
+          isAnyClicked={clicked}
           labelColor="#000"
           hoverLabelColor="#fff"
         />
@@ -32,7 +46,7 @@ export default function OXQuizButton() {
           label="X"
           onClick={() => handleButtonClick(1)}
           isClicked={clickedIndex === 1}
-          isAnyClicked={clickedIndex !== null}
+          isAnyClicked={clicked}
           labelColor="#000"
           hoverLabelColor="#fff"
         />
