@@ -45,11 +45,6 @@ export default function QuzeContainer() {
     return () => clearInterval(timer);
   }, [timeLeft]);
 
-  // 퀴즈 바뀌면 타이머 초기화
-  useEffect(() => {
-    setTimeLeft(60);
-  }, [currentQuizIndex]);
-
   const getMultiple = async () => {
     try {
       setLoading(true);
@@ -73,10 +68,6 @@ export default function QuzeContainer() {
     } else {
       navigate("/OXQuizPages"); // 문제 끝나면 OX 퀴즈 페이지 이동
     }
-  };
-
-  const handleAnswerClick = (answer: string) => {
-    goToNextQuiz();
   };
 
   if (loading) return <p>Loading...</p>;
