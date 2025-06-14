@@ -24,9 +24,10 @@ export default function ResultPages() {
 
         const photoRef = ref(fstorage, `uploads/captureImg/${uuidv4()}.jpg`); //uuidv4(): 고유한 아이디를 만들어주는 함수
         uploadString(photoRef, imgUrl, "data_url")
-        //uploadString(): 문자열 형태로 이미지를 저장할 때 사용하는 함수
-        //"data_url": 업로드할 문자열이 data URL 형식임
-          .then((snapshot) => { //snapshot: Firebase Storage에 무엇이 올라갔고, 어디에 저장됐고, 어떤 경로로 접근할 수 있는지 알려줌
+          //uploadString(): 문자열 형태로 이미지를 저장할 때 사용하는 함수
+          //"data_url": 업로드할 문자열이 data URL 형식임
+          .then((snapshot) => {
+            //snapshot: Firebase Storage에 무엇이 올라갔고, 어디에 저장됐고, 어떤 경로로 접근할 수 있는지 알려줌
             console.log("업로드 성공: ", snapshot);
           })
           .catch((err) => {

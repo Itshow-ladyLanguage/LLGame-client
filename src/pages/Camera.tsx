@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Webcam from "react-webcam";
 import "./Camera.css";
 
-import { fstorage } from "../../firebase/firebase";
+import { fstorage } from "../../firebase/firebase"; // 경로 확인!
 import { ref, uploadString, getDownloadURL } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 
@@ -13,38 +13,40 @@ const Camera = () => {
   const [timer, setTimer] = useState<number>(5);
   const [photo, setPhoto] = useState<string | null>(null);
 
-  // 자신의 컴퓨터 카메라를 쓸 것
   const videoConstraints = {
     facingMode: "user",
   };
 
-  // 카운트다운
   useEffect(() => {
     if (timer > 0) {
       const timerID = setTimeout(() => setTimer(timer - 1), 1000);
       return () => clearTimeout(timerID);
-    }
-    else if (timer == 0 && webcamRef.current) { // 타이머가 0이고, 웹캠이 참조 가능한 상태인가?
-      const photoSrc = webcamRef.current.getScreenshot(); //웹캠으로 사진찍은 화면을 이미지로 저장
-      
+    } else if (timer === 0 && webcamRef.current) {
+      const photoSrc = webcamRef.current.getScreenshot();
       if (photoSrc) {
         setPhoto(photoSrc);
         console.log("캡처된 사진:", photoSrc);
-
-        const photoRef = ref(fstorage, `uploads/cameraImg/${uuidv4()}.jpg`); //uuidv4(): 고유한 아이디를 만들어주는 함수
-        uploadString(photoRef, photoSrc, "data_url")
-        //uploadString(): 문자열 형태로 이미지를 저장할 때 사용하는 함수
-        //"data_url": 업로드할 문자열이 data URL 형식임
-          .then((snapshot) => { //snapshot: Firebase Storage에 무엇이 올라갔고, 어디에 저장됐고, 어떤 경로로 접근할 수 있는지 알려줌
-            console.log("업로드 성공: ", snapshot);
-            return getDownloadURL(snapshot.ref);
-          })
-          .catch((err) => {
-            console.error("업로드 실패: ", err);
-          });
       }
     }
   }, [timer]);
+
+  const handleUploadAndNavigate = () => {
+    if (!photo) return;
+
+    const photoRef = ref(fstorage, `uploads/cameraImg/${uuidv4()}.jpg`);
+    uploadString(photoRef, photo, "data_url")
+      .then((snapshot) => {
+        console.log("업로드 성공:", snapshot);
+        return getDownloadURL(snapshot.ref);
+      })
+      .then((downloadURL) => {
+        console.log("다운로드 URL:", downloadURL);
+        navigate("/QuzePages");
+      })
+      .catch((err) => {
+        console.error("업로드 실패:", err);
+      });
+  };
 
   return (
     <div
@@ -65,7 +67,7 @@ const Camera = () => {
           height: "650px",
           border: "3px solid #850E35",
           display: "flex",
-          alignItems: "center", // 세로 중앙 정렬
+          alignItems: "center",
           flexDirection: "column",
           position: "relative",
         }}
@@ -95,23 +97,21 @@ const Camera = () => {
               height: "550px",
               borderRadius: "42px",
               overflow: "hidden",
-              pointerEvents: "none", // 마우스 터치 이벤트 무시 (이 코드가 없으면 클릭이 오버레이에서 먹혀서 버튼이나 웹캠 캡처가 안 될수도 있음)
+              pointerEvents: "none",
               zIndex: 2,
             }}
           >
             {photo && (
-              <div>
-                <img
-                  src={photo}
-                  alt="Captured"
-                  style={{
-                    width: "950px",
-                    height: "550px",
-                    objectFit: "cover", // 캡쳐 사진 비율 맞추기
-                    borderRadius: "42px",
-                  }}
-                />
-              </div>
+              <img
+                src={photo}
+                alt="Captured"
+                style={{
+                  width: "950px",
+                  height: "550px",
+                  objectFit: "cover",
+                  borderRadius: "42px",
+                }}
+              />
             )}
             <div
               className="circle-camera"
@@ -150,11 +150,9 @@ const Camera = () => {
 
         <div className="btn-container">
           <button
-            type="submit"
+            type="button"
             className="button"
-            style={{
-              marginRight: "13px",
-            }}
+            style={{ marginRight: "13px" }}
             onClick={() => {
               setPhoto(null);
               setTimer(5);
@@ -162,13 +160,12 @@ const Camera = () => {
           >
             다시 찍기
           </button>
+
           <button
-          onClick={() => navigate("/QuzePages")}
-            type="submit"
+            type="button"
             className="button"
-            style={{
-              marginRight: "3%",
-            }}
+            style={{ marginRight: "3%" }}
+            onClick={handleUploadAndNavigate}
           >
             완료
           </button>
