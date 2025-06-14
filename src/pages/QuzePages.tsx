@@ -1,6 +1,4 @@
 import QuzeContainer from "../components/QuzeContainer";
-import Bar from "../components/Bar";
-import Timer from "../components/Timer";
 import PageNumber from "../components/PageNumber";
 import { useEffect } from "react";
 
