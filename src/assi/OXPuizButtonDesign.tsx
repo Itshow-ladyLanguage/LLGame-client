@@ -7,6 +7,7 @@ export default function OXPuizButtonDesign(props: {
   isAnyClicked: boolean;
   labelColor?: string;
   hoverLabelColor?: string;
+  scoreToShow?: number;
 }) {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -85,7 +86,11 @@ export default function OXPuizButtonDesign(props: {
             transform: "rotateY(180deg)",
           }}
         >
-          +3
+         {props.scoreToShow !== undefined && (
+            <div>
+              +{props.scoreToShow}
+            </div>
+          )}
         </div>
       </div>
     </div>
