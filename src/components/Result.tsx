@@ -1,40 +1,13 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 
 export default function ResultPages() {
   useEffect(() => {
     document.body.style.margin = "0";
   }, []);
 
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const popupRef = useRef<HTMLDivElement>(null);
-  const [hoveredBtn, setHoveredBtn] = useState<null | "rank" | "explain">(null);
-
-  // 버튼 외부 클릭 시 팝업 닫기
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        popupRef.current &&
-        !popupRef.current.contains(event.target as Node)
-      ) {
-        setIsPopupOpen(false);
-      }
-    }
-
-    if (isPopupOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isPopupOpen]);
-
-  // 버튼 클릭 시 토글만 발생
-  function handleTogglePopup() {
-    setIsPopupOpen((prev) => !prev);
-  }
+  const [isRankHovered, setIsRankHovered] = useState(false);
+  const [isExplainHovered, setIsExplainHovered] = useState(false);
+  const [isExplainClicked, setIsExplainClicked] = useState(false);
 
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
@@ -84,66 +57,65 @@ export default function ResultPages() {
             position: "relative",
           }}
         >
+          {/* 랭킹 화면 버튼 */}
           <button
-            onMouseEnter={() => setHoveredBtn("rank")}
-            onMouseLeave={() => setHoveredBtn(null)}
             style={{
               width: "204px",
               height: "71px",
               fontSize: "33px",
               borderRadius: "15px",
               border: "none",
+              color: isRankHovered ? "#ffffff" : "#E10CA1",
+              backgroundColor: isRankHovered ? "#E10CA1" : "#ECECEC",
               cursor: "pointer",
-              backgroundColor: hoveredBtn === "rank" ? "#E10CA1" : "ECECEC",
-              color: hoveredBtn === "rank" ? "#ffffff" : "#E10CA1",
             }}
+            onMouseEnter={() => setIsRankHovered(true)}
+            onMouseLeave={() => setIsRankHovered(false)}
           >
             랭킹 화면
           </button>
 
+          {/* 게임 해설 버튼 */}
           <button
-            onMouseEnter={() => setHoveredBtn("explain")}
-            onMouseLeave={() => setHoveredBtn(null)}
             style={{
               width: "204px",
               height: "71px",
               fontSize: "33px",
               borderRadius: "15px",
               border: "none",
+              color:
+                isExplainHovered || isExplainClicked ? "#ffffff" : "#E10CA1",
+              backgroundColor:
+                isExplainHovered || isExplainClicked ? "#E10CA1" : "#ECECEC",
               cursor: "pointer",
-              position: "relative",
-              zIndex: 10,
-              backgroundColor: hoveredBtn === "explain" ? "#E10CA1" : "ECECEC",
-              color: hoveredBtn === "explain" ? "white" : "#E10CA1",
             }}
-            onClick={handleTogglePopup}
+            onMouseEnter={() => setIsExplainHovered(true)}
+            onMouseLeave={() => setIsExplainHovered(false)}
+            onClick={() => setIsExplainClicked((prev) => !prev)} // toggle
           >
             게임 해설
           </button>
-
-          {isPopupOpen && (
-            <div
-              ref={popupRef}
-              style={{
-                position: "absolute",
-                top: "-130px", // 위아래 조절 가능
-                left: "110%",
-                width: "180px",
-                backgroundColor: "white",
-                border: "2px solid #E10CA1",
-                borderRadius: "15px",
-                padding: "10px",
-                boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
-              }}
-            >
-              <img
-                src="/images/Qr.png"
-                alt="게임 해설 QR 코드"
-                style={{ width: "100%", borderRadius: "10px" }}
-              />
-            </div>
-          )}
         </div>
+
+        {/* 게임 해설 이미지 토글 */}
+        {isExplainClicked && (
+          <img
+            src="/images/Qr.png"
+            alt="게임 해설 이미지"
+            style={{
+              position: "absolute",
+              left: "60%", // 버튼 오른쪽
+              top: "55%",
+              width: "200px",
+              height: "200px",
+              objectFit: "cover",
+              borderRadius: "12px",
+              border: "2px solid #E10CA1",
+              backgroundColor: "#fff",
+              boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+            }}
+          />
+        )}
       </div>
     </div>
   );
