@@ -1,12 +1,13 @@
-import Button from "../assi/Button";
+import Button from '../assi/Button';
 
 type Props = {
   answers: string[];
-  onAnswerClick: (answer: string) => void;
+  scores: number[];
+  onAnswerClick: (score: number) => void;
 };
 
-export default function QuzeButton({ answers = [], onAnswerClick }: Props) {
-  if (answers.length === 0) return null;
+export default function QuzeButton({ answers = [], scores = [], onAnswerClick }: Props) {
+  if (answers.length === 0 || scores.length === 0) return null;
 
   const groupedAnswers = answers.reduce<string[][]>((acc, curr, i) => {
     if (i % 2 === 0) acc.push([curr]);
@@ -15,24 +16,21 @@ export default function QuzeButton({ answers = [], onAnswerClick }: Props) {
   }, []);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: "57px",
-      }}
-    >
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "57px" }}>
       {groupedAnswers.map((row, rowIndex) => (
         <div key={rowIndex} style={{ display: "flex", gap: "26px" }}>
-          {row.map((label, idx) => (
-            <div
-              key={idx}
-              style={{ marginRight: idx === 0 ? "10px" : undefined }}
-            >
-              <Button label={label} onClick={() => onAnswerClick(label)} />
-            </div>
-          ))}
+          {row.map((label, idx) => {
+            const flatIndex = rowIndex * 2 + idx;
+            return (
+              <div key={idx} style={{ marginRight: idx === 0 ? "10px" : undefined }}>
+                <Button
+                  label={label}
+                  score={scores[flatIndex]}
+                  onClick={onAnswerClick}
+                />
+              </div>
+            );
+          })}
         </div>
       ))}
     </div>

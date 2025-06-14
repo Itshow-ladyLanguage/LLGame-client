@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import Quzelook from "./Quzelook";
 import QuzeButton from "./QuzeButton";
 import axios from "axios";
-import Bar from "./Bar"; // ← 추가
+import Bar from "./Bar";
+import { useNavigate } from "react-router-dom";
 
 type QuizType = {
   type: string;
@@ -17,6 +18,7 @@ export default function QuzeContainer() {
   const [quizData, setQuizData] = useState<QuizType[]>([]);
   const [currentQuizIndex, setCurrentQuizIndex] = useState(0);
   const [timeLeft, setTimeLeft] = useState(60);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getMultiple();
@@ -46,7 +48,9 @@ export default function QuzeContainer() {
       setLoading(true);
       setError(null);
 
-      const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/quiz/multiple`);
+      const res = await axios.get(
+        `${import.meta.env.VITE_BASE_URL}/quiz/multiple`
+      );
       setQuizData(res.data);
     } catch (e) {
       console.error("Failed to retrieve quizzes : ", e);
@@ -57,9 +61,11 @@ export default function QuzeContainer() {
   };
 
   const goToNextQuiz = () => {
-    setCurrentQuizIndex((prev) =>
-      prev + 1 < quizData.length ? prev + 1 : 0
-    );
+    if (currentQuizIndex + 1 < quizData.length) {
+      setCurrentQuizIndex(currentQuizIndex + 1);
+    } else {
+      navigate("/resultPages"); // 문제 끝나면 결과 페이지 이동
+    }
   };
 
   const handleAnswerClick = (answer: string) => {
@@ -76,7 +82,13 @@ export default function QuzeContainer() {
     <div>
       <Bar timeLeft={timeLeft} />
       <Quzelook question={currentQuiz.question} />
-      <QuzeButton answers={currentQuiz.answer} onAnswerClick={handleAnswerClick} />
+      <QuzeButton
+        answers={currentQuiz.answer}
+        scores={currentQuiz.score as number[]}
+        onAnswerClick={(score) => {
+          goToNextQuiz();
+        }}
+      />
     </div>
   );
 }

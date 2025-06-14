@@ -1,29 +1,29 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
-export default function Button(props: any) {
+type ButtonProps = {
+  label: string;
+  score: number;  // 점수 받기
+  labelColor?: string;
+  hoverLabelColor?: string;
+  onClick?: (score: number) => void; // 클릭 시 점수를 전달
+};
+
+export default function Button({
+  label,
+  score,
+  labelColor = "#000",
+  hoverLabelColor = "#fff",
+  onClick,
+}: ButtonProps) {
   const [isClicked, setIsClicked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  const navigate = useNavigate();
-
-  // 커스텀 속성을 타입 단언으로 정의
-  const globalWindow = window as typeof window & {
-    __buttonClicked?: boolean;
-  };
-
-  // 전역 상태 초기화
-  if (globalWindow.__buttonClicked === undefined) {
-    globalWindow.__buttonClicked = false;
-  }
 
   const handleClick = () => {
-    if (!isClicked && !globalWindow.__buttonClicked) {
+    if (!isClicked) {
       setIsClicked(true);
-      globalWindow.__buttonClicked = true;
-
       setTimeout(() => {
-        navigate("/ResultPages"); // 원하는 경로로 이동
-      }, 1500);
+        if (onClick) onClick(score); // 점수를 전달
+      }, 800);
     }
   };
 
@@ -40,12 +40,10 @@ export default function Button(props: any) {
           transformStyle: "preserve-3d",
           transform: isClicked ? "rotateY(180deg)" : "none",
           transition: "transform 0.8s ease",
-          cursor:
-            isClicked || globalWindow.__buttonClicked ? "default" : "pointer",
+          cursor: isClicked ? "default" : "pointer",
           borderRadius: "35px",
         }}
       >
-        {/* 앞면 */}
         <div
           style={{
             position: "absolute",
@@ -58,17 +56,12 @@ export default function Button(props: any) {
             justifyContent: "center",
             alignItems: "center",
             fontSize: "36px",
-            color:
-              isHovered && !isClicked
-                ? props.hoverLabelColor || "#ffffff"
-                : props.labelColor || "#000000",
+            color: isHovered && !isClicked ? hoverLabelColor : labelColor,
             transition: "all 0.3s ease",
           }}
         >
-          {props.label}
+          {label}
         </div>
-
-        {/* 뒷면 */}
         <div
           style={{
             position: "absolute",
@@ -81,11 +74,11 @@ export default function Button(props: any) {
             justifyContent: "center",
             alignItems: "center",
             fontSize: "36px",
-            color: props.hoverLabelColor || "#ffffff",
+            color: hoverLabelColor,
             transform: "rotateY(180deg)",
           }}
         >
-          +3
+          +{score}
         </div>
       </div>
     </div>
