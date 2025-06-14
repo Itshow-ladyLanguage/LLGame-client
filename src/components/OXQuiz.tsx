@@ -1,4 +1,4 @@
-export default function OXPuiz({ question }: { question: string }) {
+export default function OXQuiz({ question }: { question: string }) {
   return (
     <div
       style={{
