@@ -20,11 +20,18 @@ export default function QuzeContainer() {
   const [timeLeft, setTimeLeft] = useState(60);
   const navigate = useNavigate();
 
+  const [resetTrigger, setResetTrigger] = useState(0);
+
   useEffect(() => {
     getMultiple();
   }, []);
 
-  // 타이머 감소 로직
+  useEffect(() => {
+    setTimeLeft(60);
+    setResetTrigger((prev) => prev + 1); // 버튼 초기화를 위해
+  }, [currentQuizIndex]);
+
+  // 타이머 감소
   useEffect(() => {
     if (timeLeft <= 0) {
       goToNextQuiz();
@@ -64,7 +71,7 @@ export default function QuzeContainer() {
     if (currentQuizIndex + 1 < quizData.length) {
       setCurrentQuizIndex(currentQuizIndex + 1);
     } else {
-      navigate("/resultPages"); // 문제 끝나면 결과 페이지 이동
+      navigate("/OXQuizPages"); // 문제 끝나면 OX 퀴즈 페이지 이동
     }
   };
 
@@ -88,6 +95,7 @@ export default function QuzeContainer() {
         onAnswerClick={(score) => {
           goToNextQuiz();
         }}
+        resetTrigger={resetTrigger}
       />
     </div>
   );

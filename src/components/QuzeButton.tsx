@@ -4,9 +4,10 @@ type Props = {
   answers: string[];
   scores: number[];
   onAnswerClick: (score: number) => void;
+  resetTrigger: any;
 };
 
-export default function QuzeButton({ answers = [], scores = [], onAnswerClick }: Props) {
+export default function QuzeButton({ answers = [], scores = [], onAnswerClick, resetTrigger }: Props) {
   if (answers.length === 0 || scores.length === 0) return null;
 
   const groupedAnswers = answers.reduce<string[][]>((acc, curr, i) => {
@@ -24,6 +25,7 @@ export default function QuzeButton({ answers = [], scores = [], onAnswerClick }:
             return (
               <div key={idx} style={{ marginRight: idx === 0 ? "10px" : undefined }}>
                 <Button
+                  key={resetTrigger + '-' + flatIndex}
                   label={label}
                   score={scores[flatIndex]}
                   onClick={onAnswerClick}
