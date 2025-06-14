@@ -1,31 +1,12 @@
-// export default function Bar() {
-//   return (
-//     <div style={{
-//       width: "1579.5px",
-//       height: "15px",
-//       backgroundColor: "#F4F4F4",
-//     }}>
-
-//     </div>
-//   );
-// }
 import Timer from "./Timer";
-import { useEffect, useState } from "react";
 
-export default function Bar() {
+type BarProps = {
+  timeLeft: number;
+};
+
+export default function Bar({ timeLeft }: BarProps) {
   const totalWidth = 1579.5;
   const totalTime = 60;
-  const [timeLeft, setTimeLeft] = useState(totalTime);
-
-  useEffect(() => {
-    if (timeLeft <= 0) return;
-
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => Math.max(prev - 1, 0));
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [timeLeft]);
 
   const progressWidth = (timeLeft / totalTime) * totalWidth;
 
@@ -58,7 +39,7 @@ export default function Bar() {
           marginLeft: "11px",
         }}
       >
-        <Timer />
+        <Timer timeLeft={timeLeft} />
       </div>
     </div>
   );
