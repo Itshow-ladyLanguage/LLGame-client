@@ -1,23 +1,13 @@
-import { useEffect, useState } from "react";
+type TimerProps = {
+  timeLeft: number;
+};
 
-export default function Timer() {
-  const [seconds, setSeconds] = useState(60);
-
-  useEffect(() => {
-    if (seconds <= 0) return; // 시간 다 되면면 멈추는 코드
-
-    const timer = setInterval(() => {
-      setSeconds((prev) => prev - 1);
-    }, 1000); // 1초마다 감소
-
-    return () => clearInterval(timer); // 컴포넌트 언마운트 시 정리
-  }, [seconds]);
-
+export default function Timer({ timeLeft }: TimerProps) {
   return (
     <div
       style={{
         display: "flex",
-        gap: "8px", // 두 타이머 사이 간격
+        gap: "8px",
         marginTop: "8px",
         marginLeft: "5px",
       }}
@@ -28,7 +18,7 @@ export default function Timer() {
         style={{ height: "37.66px", width: "37.66px", marginTop: "4px" }}
       />
       <span style={{ fontSize: "31px", fontWeight: "bold", color: "#777777" }}>
-        {seconds}
+        {timeLeft}
       </span>
     </div>
   );

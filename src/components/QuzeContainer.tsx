@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import Quzelook from "./Quzelook";
 import QuzeButton from "./QuzeButton";
 import axios from "axios";
+import Bar from "./Bar"; // ← 추가
 
-// 타입 선언 (옵션)
 type QuizType = {
   type: string;
   question: string;
@@ -12,54 +12,71 @@ type QuizType = {
 };
 
 export default function QuzeContainer() {
-  console.log("QuzeContainer 렌더링");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [question, setQuestion] = useState("");
-  const [quizData, setQuizData] = useState<QuizType[]>([]); // 전체 데이터 저장
-
-  //   useEffect(() => {
-  //     console.log("useEffect 실행됨");
-  //     async function fetchQuiz() {
-  //       const res = await axios.get(
-  //         `${import.meta.env.VITE_BASE_URL}/quiz/multiple`
-  //       );
-  //       const data: QuizType[] = await res.data;
-  //       console.log("fetchQuiz data:", data);
-  //       if (data && data.length > 0) {
-  //         setQuizData(data);
-  //         setQuestion(data[0].question); // 첫 질문 설정
-  //       }
-  //     }
-  //     fetchQuiz();
-  //   }, []);
+  const [quizData, setQuizData] = useState<QuizType[]>([]);
+  const [currentQuizIndex, setCurrentQuizIndex] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(60);
 
   useEffect(() => {
     getMultiple();
   }, []);
+
+  // 타이머 감소 로직
+  useEffect(() => {
+    if (timeLeft <= 0) {
+      goToNextQuiz();
+      return;
+    }
+
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => Math.max(prev - 1, 0));
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [timeLeft]);
+
+  // 퀴즈 바뀌면 타이머 초기화
+  useEffect(() => {
+    setTimeLeft(60);
+  }, [currentQuizIndex]);
 
   const getMultiple = async () => {
     try {
       setLoading(true);
       setError(null);
 
-      const res = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/quiz/multiple`
-      );
+      const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/quiz/multiple`);
       setQuizData(res.data);
-      console.log(quizData);
     } catch (e) {
       console.error("Failed to retrieve quizzes : ", e);
-      setError(error); //e에서 error로 잠시 변경
+      setError(e as any);
     } finally {
       setLoading(false);
     }
   };
 
+  const goToNextQuiz = () => {
+    setCurrentQuizIndex((prev) =>
+      prev + 1 < quizData.length ? prev + 1 : 0
+    );
+  };
+
+  const handleAnswerClick = (answer: string) => {
+    goToNextQuiz();
+  };
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>퀴즈를 불러오는 데 실패했습니다.</p>;
+  if (quizData.length === 0) return <p>퀴즈가 없습니다.</p>;
+
+  const currentQuiz = quizData[currentQuizIndex];
+
   return (
     <div>
-      <Quzelook question={question} />
-      <QuzeButton answers={quizData} /> {/* 전체 데이터 전달 */}
+      <Bar timeLeft={timeLeft} />
+      <Quzelook question={currentQuiz.question} />
+      <QuzeButton answers={currentQuiz.answer} onAnswerClick={handleAnswerClick} />
     </div>
   );
 }

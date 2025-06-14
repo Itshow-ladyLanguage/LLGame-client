@@ -19,7 +19,7 @@ export default function QuzePages() {
       }}
     >
       <div style={{ marginBottom: "28px" }}>
-        <Bar />
+        
       </div>
       <QuzeContainer />
       <div style={{ marginTop: "63.5px" }}>
