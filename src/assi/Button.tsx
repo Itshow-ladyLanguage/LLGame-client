@@ -2,21 +2,29 @@ import { useEffect, useState } from "react";
 
 type ButtonProps = {
   label: string;
-  score: number;  // 점수 받기
+  score: number;
+  onClick?: (score: number) => void;
+  resetTrigger?: any; // 값이 바뀌면 상태 초기화용
   labelColor?: string;
   hoverLabelColor?: string;
-  onClick?: (score: number) => void; // 클릭 시 점수를 전달
 };
 
 export default function Button({
   label,
   score,
+  onClick,
+  resetTrigger,
   labelColor = "#000",
   hoverLabelColor = "#fff",
-  onClick,
 }: ButtonProps) {
+  console.log("Button 렌더링", label);
   const [isClicked, setIsClicked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+
+  // resetTrigger가 바뀔 때마다 isClicked 초기화
+  useEffect(() => {
+    setIsClicked(false);
+  }, [resetTrigger]);
 
   const handleClick = () => {
     if (!isClicked) {
