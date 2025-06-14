@@ -18,14 +18,14 @@ export default function CoverButtonDesign(props: {
       style={{
         width: "420px",
         height: "86px",
-        borderRadius: "30px",
+        borderRadius: "18px",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         cursor: "pointer",
         color: isHovered ? props.hoverLabelColor : props.labelColor,
         backgroundColor: isHovered ? props.hoverbackcolor : props.backcolor,
-        fontSize: "20px",
+        fontSize: "28px",
         border: "18.09px",
       }}
     >
