@@ -1,23 +1,36 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function Subjective() {
+export default function SuQuzeText({
+  onAnswered,
+  clicked,
+  setClicked,
+  resetTrigger,
+}: {
+  onAnswered: () => void;
+  clicked: boolean;
+  setClicked: React.Dispatch<React.SetStateAction<boolean>>;
+  resetTrigger: number;
+}) {
   const [isAnswered, setIsAnswered] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [answer, setAnswer] = useState("");
 
+  // 문제 리셋되면 초기화
   useEffect(() => {
-    document.body.style.margin = "0";
-  }, []);
+    setIsAnswered(false);
+    setAnswer("");
+  }, [resetTrigger]);
 
   const handleClick = () => {
-    // if (isAnswered || !answer.trim()) return; // 입력시 해야 넘어감
+    if (isAnswered || !answer.trim()) return; // 입력이 없거나 이미 답변했으면 무시
 
-    setIsAnimating(true);
+    setIsAnimating(true);       // 회전 애니메이션 시작
+    setIsAnswered(true);        // 먼저 점수 보이도록 상태 변경
 
     setTimeout(() => {
-      setIsAnimating(false);
-      setIsAnswered(true);
-    }, 3000);
+      setIsAnimating(false);    // 애니메이션 종료
+      onAnswered();             // 그다음 문제 넘기기!
+    }, 3000);                   // 3초 후 실행
   };
 
   return (
@@ -41,7 +54,7 @@ export default function Subjective() {
       <input
         type="text"
         placeholder="답을 입력해주세요."
-        value={isAnswered ? answer : answer}
+        value={answer}
         onChange={(e) => setAnswer(e.target.value)}
         readOnly={isAnswered}
         style={{
@@ -67,7 +80,6 @@ export default function Subjective() {
             pointerEvents: "none",
           }}
         >
-          {/* 점수 조건 위치 */}
           +3점
         </div>
       )}
@@ -98,12 +110,7 @@ export default function Subjective() {
           }}
         />
       </button>
-
-      <style>{`
-        .rotate-border {
-          animation: rotate 3s linear;
-        }
-      `}</style>
     </div>
+    
   );
 }

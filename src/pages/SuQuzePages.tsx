@@ -59,7 +59,7 @@ export default function SuQuizPages() {
     if (currentIndex + 1 < quizData.length) {
       setCurrentIndex(currentIndex + 1);
     } else {
-      navigate("/SuQuzePages");
+      navigate("/ResultPages");
     }
   };
 
@@ -82,14 +82,13 @@ export default function SuQuizPages() {
       <Subjective question={quizData[currentIndex].question} />
       <div style={{ marginTop: "87.5px" }}>
         <SuQuzeText
-        // answer={quizData[currentIndex].answer}
-        // onAnswered={goToNextQuestion}
-        // clicked={clicked}
-        // setClicked={setClicked}
-        // resetTrigger={resetTrigger}
+          onAnswered={goToNextQuestion}
+          clicked={clicked}
+          setClicked={setClicked}
+          resetTrigger={resetTrigger}
         />
       </div>
-      <PageNumber current={currentIndex + 1} total={quizData.length} />
+      <PageNumber current={currentIndex + 10} total={quizData.length} />
     </div>
   );
 }
