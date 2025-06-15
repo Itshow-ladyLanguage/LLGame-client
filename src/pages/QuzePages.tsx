@@ -20,6 +20,7 @@ export default function QuzeContainer() {
   const [currentQuizIndex, setCurrentQuizIndex] = useState(0);
   const [timeLeft, setTimeLeft] = useState(60);
   const navigate = useNavigate();
+  const [totalScore, setTotalScore] = useState(0);
 
   const [resetTrigger, setResetTrigger] = useState(0);
 
@@ -67,13 +68,13 @@ export default function QuzeContainer() {
     if (currentQuizIndex + 1 < quizData.length) {
       setCurrentQuizIndex(currentQuizIndex + 1);
     } else {
-      navigate("/OXQuizPages"); // 문제 끝나면 OX 퀴즈 페이지 이동
+      navigate("/OXQuizPages", { state: { initialScore: totalScore } }); // 문제 끝나면 OX 퀴즈 페이지 이동
     }
   };
 
-  if (loading) return <p>Loading</p>;
-  if (error) return <p>퀴즈를 불러오는 데 실패했습니다</p>;
-  if (quizData.length === 0) return <p>퀴즈가 없습니다</p>;
+  if (loading) return <p></p>;
+  if (error) return <p></p>;
+  if (quizData.length === 0) return <p></p>;
 
   const currentQuiz = quizData[currentQuizIndex];
 
@@ -95,6 +96,11 @@ export default function QuzeContainer() {
         answers={currentQuiz.answer}
         scores={currentQuiz.score as number[]}
         onAnswerClick={(score) => {
+          setTotalScore((prev) => {
+            const newScore = prev + score;
+            console.log("누적 점수:", newScore);
+            return newScore;
+          });
           goToNextQuiz();
         }}
         resetTrigger={resetTrigger}
