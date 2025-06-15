@@ -4,7 +4,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import Webcam from "react-webcam";
 import "./Camera.css";
 
-import { fstorage } from "../../firebase/firebase"; // 경로 확인!
+import { fstorage } from "../../firebase/firebase"; // 파이어베이스 설정 파일
 import { ref, uploadString, getDownloadURL } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 
@@ -14,7 +14,7 @@ const Camera = () => {
   const [timer, setTimer] = useState<number>(5);
   const [photo, setPhoto] = useState<string | null>(null);
   const [searchParams] = useSearchParams();
-  const userid = parseInt(searchParams.get('id') as string);
+  const userid = parseInt(searchParams.get("id") as string);
 
   const videoConstraints = {
     facingMode: "user",
@@ -27,36 +27,29 @@ const Camera = () => {
     } else if (timer === 0 && webcamRef.current) {
       const photoSrc = webcamRef.current.getScreenshot();
       if (photoSrc) {
-        setPhoto(photoSrc);
-        async function patchUserPhoto(photoBase64: string, userid: number) {
-          console.log("base64", photoBase64)
-          // alert("userid" + userid)
-          const res = await axios.patch(`${import.meta.env.VITE_BASE_URL}/users/${userid}`, {
-            profile_image: photoBase64
+        const photoRef = ref(fstorage, `uploads/cameraImg/${uuidv4()}.jpg`);
+
+        uploadString(photoRef, photoSrc, "data_url")
+          .then((snapshot) => getDownloadURL(snapshot.ref))
+          .then((downloadURL) => {
+            setPhoto(downloadURL); // URL 화면에 표시
+            return axios.patch(
+              `${import.meta.env.VITE_BASE_URL}/users/${userid}`,
+              {
+                profile_image: downloadURL,
+              }
+            );
+          })
+          .catch((err) => {
+            console.error("이미지 업로드 실패:", err);
           });
-        }
-        patchUserPhoto(photoSrc, userid)
-        
       }
     }
   }, [timer]);
 
   const handleUploadAndNavigate = () => {
     if (!photo) return;
-
-    const photoRef = ref(fstorage, `uploads/cameraImg/${uuidv4()}.jpg`);
-    uploadString(photoRef, photo, "data_url")
-      .then((snapshot) => {
-        console.log("업로드 성공:", snapshot);
-        return getDownloadURL(snapshot.ref);
-      })
-      .then((downloadURL) => {
-        console.log("다운로드 URL:", downloadURL);
-        navigate("/QuzePages");
-      })
-      .catch((err) => {
-        console.error("업로드 실패:", err);
-      });
+    navigate("/QuzePages");
   };
 
   return (
