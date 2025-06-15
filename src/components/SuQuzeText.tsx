@@ -1,22 +1,29 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-export default function Subjective() {
+export default function SuQuzeText({
+  onAnswered,
+  clicked,
+  setClicked,
+  resetTrigger,
+}: {
+  onAnswered: () => void;
+  clicked: boolean;
+  setClicked: React.Dispatch<React.SetStateAction<boolean>>;
+  resetTrigger: number;
+}) {
   const [isAnswered, setIsAnswered] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [answer, setAnswer] = useState("");
 
-  useEffect(() => {
-    document.body.style.margin = "0";
-  }, []);
-
   const handleClick = () => {
-    // if (isAnswered || !answer.trim()) return; // 입력시 해야 넘어감
+    if (isAnswered || !answer.trim()) return; // 입력이 없으면 넘어가지 않음
 
     setIsAnimating(true);
 
     setTimeout(() => {
       setIsAnimating(false);
       setIsAnswered(true);
+      onAnswered(); // 문제 넘기기
     }, 3000);
   };
 

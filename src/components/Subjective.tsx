@@ -1,4 +1,4 @@
-export default function OXQuiz({ question }: { question: string }) {
+export default function Subjective({ question }: { question: string }) {
   return (
     <div
       style={{
