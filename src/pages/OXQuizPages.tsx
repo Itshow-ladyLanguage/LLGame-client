@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import Bar from '../components/Bar';
-import OXQuiz from '../components/OXQuiz';
-import OXQuizButton from '../components/OXPuizButton';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+import Bar from "../components/Bar";
+import OXQuiz from "../components/OXQuiz";
+import OXQuizButton from "../components/OXPuizButton";
 import PageNumber from "../components/PageNumber";
 
 type OXQuizType = {
@@ -24,12 +25,10 @@ export default function OXQuizPages() {
   useEffect(() => {
     const fetchQuizData = async () => {
       try {
-        const res = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/quiz/ox`
-        );
+        const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/quiz/ox`);
         setQuizData(res.data);
       } catch (error) {
-        console.error('퀴즈 데이터 불러오기 실패:', error);
+        console.error("퀴즈 데이터 불러오기 실패:", error);
       }
     };
     fetchQuizData();
@@ -54,7 +53,7 @@ export default function OXQuizPages() {
   const goToNextQuestion = () => {
     setClicked(false);
     setTimeLeft(60);
-    setResetTrigger(prev => prev + 1);
+    setResetTrigger((prev) => prev + 1);
     if (currentIndex + 1 < quizData.length) {
       setCurrentIndex(currentIndex + 1);
     } else {
