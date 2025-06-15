@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation  } from "react-router-dom";
 
 import Bar from "../components/Bar";
 import OXQuiz from "../components/OXQuiz";
@@ -21,6 +21,10 @@ export default function OXQuizPages() {
   const [clicked, setClicked] = useState(false);
   const navigate = useNavigate();
   const [resetTrigger, setResetTrigger] = useState(0);
+
+  const location = useLocation();
+  const initialScore = location.state?.initialScore ?? 0;
+  const [totalScore, setTotalScore] = useState<number>(initialScore);
 
   useEffect(() => {
     const fetchQuizData = async () => {
@@ -62,7 +66,7 @@ export default function OXQuizPages() {
   };
 
   if (quizData.length === 0) {
-    return <div style={{ marginTop: "96px" }}>퀴즈를 불러오는 중입니다</div>;
+    return <div></div>;
   }
 
   return (
@@ -81,7 +85,14 @@ export default function OXQuizPages() {
       <div style={{ marginTop: "87.5px" }}>
         <OXQuizButton
           answer={quizData[currentIndex].answer}
-          onAnswered={goToNextQuestion}
+          onAnswered={(score: number) => {
+            setTotalScore((prev) => {
+              const newTotal = prev + score;
+              console.log("누적 점수:", newTotal);
+              return newTotal;
+            });
+            goToNextQuestion();
+          }}
           clicked={clicked}
           setClicked={setClicked}
           resetTrigger={resetTrigger}

@@ -8,8 +8,8 @@ export default function OXQuizButton({
   setClicked,
   resetTrigger,
 }: {
-  answer: string; // "O" 또는 "X"
-  onAnswered: () => void;
+  answer: string;         // "O" 또는 "X"
+  onAnswered: (score: number) => void;
   clicked: boolean;
   setClicked: (v: boolean) => void;
   resetTrigger: number;
@@ -30,8 +30,8 @@ export default function OXQuizButton({
       setScoreToShow(score);
 
       setTimeout(() => {
-        onAnswered();
-        setScoreToShow(null); // 다음 문제 넘어갈 때 점수 초기화
+        onAnswered(score);
+        setScoreToShow(null);  // 다음 문제 넘어갈 때 점수 초기화
       }, 800);
     }
   };

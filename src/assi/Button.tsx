@@ -17,7 +17,6 @@ export default function Button({
   labelColor = "#000",
   hoverLabelColor = "#fff",
 }: ButtonProps) {
-  console.log("Button 렌더링", label);
   const [isClicked, setIsClicked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
