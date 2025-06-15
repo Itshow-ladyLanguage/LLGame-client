@@ -11,7 +11,7 @@ import Emoticon from "./components/Emoticon";
 import EmoticonPages from "./pages/EmoticonPages";
 import LoadImageFromFirebase from "./pages/LoadImageFromFirebase";
 import CoverPages from "./pages/CoverPages";
-import OXQuizPages from "./pages/OXQuizPages";
+// import OXQuizPages from "./pages/OXQuizPages";
 const App = () => {
   return (
     <Routes>
@@ -26,7 +26,7 @@ const App = () => {
       <Route path="/Emoticon" element={<Emoticon />} /> {/*결과 페이지*/}
       <Route path="/Emo" element={<EmoticonPages />} /> {/*결과 페이지*/}
       <Route path="/SuQuzePages" element={<SuQuzePages />} /> {/*문제주관식*/}
-      <Route path="/OXQuizPages" element={<OXQuizPages />} /> {/*문제 OX*/}
+      {/* <Route path="/OXQuizPages" element={<OXQuizPages />} /> 문제 OX */}
       <Route path="/Up" element={<LoadImageFromFirebase />} /> {/*문제 OX*/}
     </Routes>
   );
