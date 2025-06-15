@@ -10,8 +10,8 @@ import PageNumber from "../components/PageNumber";
 type OXQuizType = {
   type: string;
   question: string;
-  answer: string;
-  score: number;
+  answer: string[]; // JSON 배열로 받아오기
+  score: number[];  // JSON 배열로 받아오기
 };
 
 export default function OXQuizPages() {
@@ -23,7 +23,7 @@ export default function OXQuizPages() {
   const [resetTrigger, setResetTrigger] = useState(0);
 
   const location = useLocation();
-  const initialScore = location.state?.initialScore ?? 0;
+  const initialScore = Number(location.state?.initialScore ?? 0);
   const [totalScore, setTotalScore] = useState<number>(initialScore);
 
   useEffect(() => {
@@ -85,20 +85,23 @@ export default function OXQuizPages() {
       <div style={{ marginTop: "87.5px" }}>
         <OXQuizButton
           answer={quizData[currentIndex].answer}
+          scoreArray={quizData[currentIndex].score}
           onAnswered={(score: number) => {
             setTotalScore((prev) => {
-              const newTotal = prev + score;
+              const newTotal = prev + Number(score);
               console.log("누적 점수:", newTotal);
               return newTotal;
-            });
-            goToNextQuestion();
+            });            
+            setTimeout(() => {
+              goToNextQuestion();
+            }, 800);
           }}
           clicked={clicked}
           setClicked={setClicked}
           resetTrigger={resetTrigger}
         />
       </div>
-      <PageNumber current={currentIndex + 1} total={quizData.length} />
+      <PageNumber current={currentIndex + 7} total={quizData.length} />
     </div>
   );
 }

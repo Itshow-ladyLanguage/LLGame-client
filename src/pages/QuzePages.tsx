@@ -68,7 +68,7 @@ export default function QuzeContainer() {
     if (currentQuizIndex + 1 < quizData.length) {
       setCurrentQuizIndex(currentQuizIndex + 1);
     } else {
-      navigate("/OXQuizPages", { state: { initialScore: totalScore } }); // 문제 끝나면 OX 퀴즈 페이지 이동
+      navigate("/OXQuizPages", { state: { initialScore: Number(totalScore) } }); // 문제 끝나면 OX 퀴즈 페이지 이동
     }
   };
 
