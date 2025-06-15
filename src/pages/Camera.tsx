@@ -1,5 +1,6 @@
+import axios from "axios";
 import { useRef, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Webcam from "react-webcam";
 import "./Camera.css";
 
@@ -12,6 +13,8 @@ const Camera = () => {
   const webcamRef = useRef<Webcam | null>(null);
   const [timer, setTimer] = useState<number>(5);
   const [photo, setPhoto] = useState<string | null>(null);
+  const [searchParams] = useSearchParams();
+  const userid = parseInt(searchParams.get('id') as string);
 
   const videoConstraints = {
     facingMode: "user",
@@ -25,7 +28,15 @@ const Camera = () => {
       const photoSrc = webcamRef.current.getScreenshot();
       if (photoSrc) {
         setPhoto(photoSrc);
-        console.log("캡처된 사진:", photoSrc);
+        async function patchUserPhoto(photoBase64: string, userid: number) {
+          console.log("base64", photoBase64)
+          // alert("userid" + userid)
+          const res = await axios.patch(`${import.meta.env.VITE_BASE_URL}/users/${userid}`, {
+            profile_image: photoBase64
+          });
+        }
+        patchUserPhoto(photoSrc, userid)
+        
       }
     }
   }, [timer]);
