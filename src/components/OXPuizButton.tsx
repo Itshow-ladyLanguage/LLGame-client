@@ -8,7 +8,7 @@ export default function OXQuizButton({
   setClicked,
   resetTrigger,
 }: {
-  answer: string;         // "O" 또는 "X"
+  answer: string; // "O" 또는 "X"
   onAnswered: () => void;
   clicked: boolean;
   setClicked: (v: boolean) => void;
@@ -31,7 +31,7 @@ export default function OXQuizButton({
 
       setTimeout(() => {
         onAnswered();
-        setScoreToShow(null);  // 다음 문제 넘어갈 때 점수 초기화
+        setScoreToShow(null); // 다음 문제 넘어갈 때 점수 초기화
       }, 800);
     }
   };
@@ -59,7 +59,9 @@ export default function OXQuizButton({
           isAnyClicked={clicked}
           labelColor="#000"
           hoverLabelColor="#fff"
-          scoreToShow={clickedIndex === 0 ? scoreToShow ?? undefined : undefined}
+          scoreToShow={
+            clickedIndex === 0 ? scoreToShow ?? undefined : undefined
+          }
         />
         <OXPuizButtonDesign
           key={`x-button-${resetTrigger}`}
@@ -69,7 +71,9 @@ export default function OXQuizButton({
           isAnyClicked={clicked}
           labelColor="#000"
           hoverLabelColor="#fff"
-          scoreToShow={clickedIndex === 1 ? scoreToShow ?? undefined : undefined}
+          scoreToShow={
+            clickedIndex === 1 ? scoreToShow ?? undefined : undefined
+          }
         />
       </div>
     </div>
