@@ -64,11 +64,71 @@ export default function QuzeContainer() {
     }
   };
 
-  const goToNextQuiz = () => {
+  const goToNextQuiz = (scoreToAdd?: number) => {
+    // 점수가 전달된 경우 먼저 누적하고 다음 페이지로 이동 처리
+    if (scoreToAdd !== undefined) {
+      setTotalScore((prev) => {
+        const newTotal = prev + scoreToAdd;
+        console.log("최종 점수:", scoreToAdd, "누적 점수:", newTotal);
+
+        // 마지막 문제인 경우 점수 누적 후 다음 페이지로 이동
+        if (currentQuizIndex + 1 >= quizData.length) {
+          console.log("마지막 문제 완료 - 최종 점수:", newTotal);
+          // 상태 업데이트 후 navigate 실행
+          setTimeout(() => {
+            navigate("/OXQuizPages", {
+              state: {
+                initialScore: newTotal,
+              },
+            });
+          }, 100);
+          return newTotal;
+        }
+
+        return newTotal;
+      });
+    }
+
+    // 마지막 문제가 아닌 경우에만 다음 문제로 이동
     if (currentQuizIndex + 1 < quizData.length) {
       setCurrentQuizIndex(currentQuizIndex + 1);
+    } else if (scoreToAdd === undefined) {
+      // 시간 초과로 마지막 문제에 도달한 경우
+      console.log("시간 초과 - 현재 점수로 이동:", totalScore);
+      navigate("/OXQuizPages", {
+        state: {
+          initialScore: totalScore,
+        },
+      });
+    }
+  };
+
+  const handleAnswerClick = (score: number) => {
+    // 선택한 버튼 점수 * 2 + 남은시간
+    const finalScore = score * 2 + timeLeft;
+
+    if (currentQuizIndex + 1 >= quizData.length) {
+      // 마지막 문제인 경우: 최종 점수를 포함해서 호출
+      goToNextQuiz(finalScore);
     } else {
-      navigate("/OXQuizPages", { state: { initialScore: Number(totalScore) } }); // 문제 끝나면 OX 퀴즈 페이지 이동
+      // 마지막 문제가 아닌 경우: 점수 누적 후 다음 문제로
+      setTotalScore((prev) => {
+        const newScore = prev + finalScore;
+        console.log(
+          "기본 점수:",
+          score,
+          "점수 * 2:",
+          score * 2,
+          "남은 시간:",
+          timeLeft,
+          "최종 점수:",
+          finalScore,
+          "누적 점수:",
+          newScore
+        );
+        return newScore;
+      });
+      goToNextQuiz();
     }
   };
 
@@ -92,19 +152,12 @@ export default function QuzeContainer() {
       </div>
       <Quzelook question={currentQuiz.question} />
       <div style={{ marginTop: "87.5px" }}>
-      <QuzeButton
-        answers={currentQuiz.answer}
-        scores={currentQuiz.score as number[]}
-        onAnswerClick={(score) => {
-          setTotalScore((prev) => {
-            const newScore = prev + score;
-            console.log("누적 점수:", newScore);
-            return newScore;
-          });
-          goToNextQuiz();
-        }}
-        resetTrigger={resetTrigger}
-      />
+        <QuzeButton
+          answers={currentQuiz.answer}
+          scores={currentQuiz.score as number[]}
+          onAnswerClick={handleAnswerClick}
+          resetTrigger={resetTrigger}
+        />
       </div>
       <PageNumber current={currentQuizIndex + 1} total={quizData.length} />
     </div>
