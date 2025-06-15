@@ -14,7 +14,7 @@ type SuQuizType = {
   score: number;
 };
 
-export default function OXQuizPages() {
+export default function SuQuizPages() {
   const [quizData, setQuizData] = useState<SuQuizType[]>([]);
   const [timeLeft, setTimeLeft] = useState(60);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -64,7 +64,7 @@ export default function OXQuizPages() {
   };
 
   if (quizData.length === 0) {
-    return <div style={{ marginTop: "96px" }}>퀴즈를 불러오는 중입니다</div>;
+    return <div></div>;
   }
 
   return (

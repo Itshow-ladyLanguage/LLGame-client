@@ -3,12 +3,14 @@ import OXPuizButtonDesign from "../assi/OXPuizButtonDesign";
 
 export default function OXQuizButton({
   answer,
+  scoreArray,
   onAnswered,
   clicked,
   setClicked,
   resetTrigger,
 }: {
-  answer: string;         // "O" 또는 "X"
+  answer: string[];        // ["O", "X"]
+  scoreArray: number[];    // [4, 0] or [0, 4]
   onAnswered: (score: number) => void;
   clicked: boolean;
   setClicked: (v: boolean) => void;
@@ -22,17 +24,9 @@ export default function OXQuizButton({
       setClicked(true);
       setClickedIndex(index);
 
-      // index 0 = O, index 1 = X
-      const selected = index === 0 ? "O" : "X";
-
-      // 정답 맞는지 확인해서 점수 세팅
-      const score = selected === answer ? 4 : 0;
+      const score = scoreArray[index]; // 해당 선택의 점수 가져오기
       setScoreToShow(score);
-
-      setTimeout(() => {
-        onAnswered(score);
-        setScoreToShow(null);  // 다음 문제 넘어갈 때 점수 초기화
-      }, 800);
+      onAnswered(score);
     }
   };
 
