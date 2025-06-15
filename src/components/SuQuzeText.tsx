@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function SuQuzeText({
   onAnswered,
@@ -15,16 +15,22 @@ export default function SuQuzeText({
   const [isAnimating, setIsAnimating] = useState(false);
   const [answer, setAnswer] = useState("");
 
-  const handleClick = () => {
-    if (isAnswered || !answer.trim()) return; // 입력이 없으면 넘어가지 않음
+  // 문제 리셋되면 초기화
+  useEffect(() => {
+    setIsAnswered(false);
+    setAnswer("");
+  }, [resetTrigger]);
 
-    setIsAnimating(true);
+  const handleClick = () => {
+    if (isAnswered || !answer.trim()) return; // 입력이 없거나 이미 답변했으면 무시
+
+    setIsAnimating(true);       // 회전 애니메이션 시작
+    setIsAnswered(true);        // 먼저 점수 보이도록 상태 변경
 
     setTimeout(() => {
-      setIsAnimating(false);
-      setIsAnswered(true);
-      onAnswered(); // 문제 넘기기
-    }, 3000);
+      setIsAnimating(false);    // 애니메이션 종료
+      onAnswered();             // 그다음 문제 넘기기!
+    }, 3000);                   // 3초 후 실행
   };
 
   return (
@@ -48,7 +54,7 @@ export default function SuQuzeText({
       <input
         type="text"
         placeholder="답을 입력해주세요."
-        value={isAnswered ? answer : answer}
+        value={answer}
         onChange={(e) => setAnswer(e.target.value)}
         readOnly={isAnswered}
         style={{
@@ -74,7 +80,6 @@ export default function SuQuzeText({
             pointerEvents: "none",
           }}
         >
-          {/* 점수 조건 위치 */}
           +3점
         </div>
       )}
@@ -105,12 +110,7 @@ export default function SuQuzeText({
           }}
         />
       </button>
-
-      <style>{`
-        .rotate-border {
-          animation: rotate 3s linear;
-        }
-      `}</style>
     </div>
+    
   );
 }
