@@ -22,7 +22,10 @@ const Login = () => {
         email,
       });
       console.log("유저 생성 성공", res.data);
-      navigate("/camera");
+      navigate({
+        pathname: '/camera',
+        search: '?id=' + res.data.id
+      });
     } catch (e) {
       console.error("유저 생성 실패 : ", e);
       setError(error);
