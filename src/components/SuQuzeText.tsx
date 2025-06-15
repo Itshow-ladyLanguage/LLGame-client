@@ -35,9 +35,7 @@ export default function Subjective() {
         paddingLeft: "40px",
         position: "relative",
         transition: "background-color 0.3s ease",
-        boxShadow: isAnswered
-          ? "0 6px 15px rgba(0, 0, 0, 0.2)"
-          : "none",
+        boxShadow: isAnswered ? "0 6px 15px rgba(0, 0, 0, 0.2)" : "none",
       }}
     >
       <input
