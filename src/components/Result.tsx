@@ -91,10 +91,13 @@ export default function ResultPages() {
   useEffect(() => {
     const saveResultToServer = async () => {
       try {
-        const response = await axios.patch(`${import.meta.env.VITE_BASE_URL}/users/${userId}`, {
-          score: finalScore,
-          type: resultMessage.title,
-        });
+        const response = await axios.patch(
+          `${import.meta.env.VITE_BASE_URL}/users/${userId}`,
+          {
+            score: finalScore,
+            type: resultMessage.title,
+          }
+        );
         console.log("점수 및 유형 저장:", response.data);
       } catch (error) {
         console.error("서버 저장 실패:", error);
@@ -113,7 +116,9 @@ export default function ResultPages() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/users/${userId}`);
+        const response = await axios.get(
+          `${import.meta.env.VITE_BASE_URL}/users/${userId}`
+        );
         if (response.data && response.data.profile_image) {
           setUserProfileImage(response.data.profile_image);
         }

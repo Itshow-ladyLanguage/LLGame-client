@@ -5,13 +5,13 @@ export default function SuQuzeText({
   clicked,
   setClicked,
   resetTrigger,
-  quizId, // 추가된 prop
+  quizId,
 }: {
   onAnswered: (score: number) => void;
   clicked: boolean;
   setClicked: React.Dispatch<React.SetStateAction<boolean>>;
   resetTrigger: number;
-  quizId: string; // 추가된 prop 타입
+  quizId: string;
 }) {
   const [isAnswered, setIsAnswered] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -82,114 +82,202 @@ export default function SuQuzeText({
     }
   };
 
+  // 전체 박스 둘레 계산: width=1300, height=119, radius=26
+  const fullPerimeter = 2 * (1300 + 119) - 4 * 26 + 2 * Math.PI * 26;
+  const fullDashLength = Math.round(fullPerimeter);
+
   return (
-    <div
-      className={isAnimating ? "rotate-border" : ""}
-      style={{
-        width: "1300px",
-        height: "119px",
-        border: "1px solid #FBB8D4",
-        borderRadius: "26px",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        backgroundColor: isAnswered ? "#E10CA1" : "#F7F7F7",
-        paddingLeft: "30px", // 40px에서 30px로 축소
-        paddingRight: "80px", // 버튼 공간 확보
-        position: "relative",
-        transition: "background-color 0.3s ease",
-        boxShadow: isAnswered ? "0 6px 15px rgba(0, 0, 0, 0.2)" : "none",
-      }}
-    >
-      {/* 텍스트 영역을 별도 컨테이너로 감싸기 */}
-      <div style={{ flex: 1, position: "relative" }}>
-        <input
-          type="text"
-          placeholder="답을 입력해주세요."
-          value={answer}
-          onChange={(e) => setAnswer(e.target.value)}
-          readOnly={isAnswered || isLoading}
-          autoFocus
-          style={{
-            fontSize: "37px",
-            border: "none",
-            background: "none",
-            display: isAnswered || isLoading ? "none" : "block",
-            outline: "none",
-            width: "100%",
-            color: "black",
-          }}
-        />
+    <>
+      <style>
+        {`
 
-        {isAnswered && (
-          <div
-            style={{
-              fontSize: "37px",
-              color: "white",
-              fontWeight: "bold",
-              pointerEvents: "none",
-              position: "absolute",
-              left: "50%",
-              top: "50%",
-              transform: "translate(-50%, -50%)",
-            }}
-          >
-            +{score}점
-          </div>
-        )}
+          
+          @keyframes pulse {
+            0% {
+              box-shadow: 0 0 0 0 rgba(225, 12, 161, 0.7);
+            }
+            70% {
+              box-shadow: 0 0 0 10px rgba(225, 12, 161, 0);
+            }
+            100% {
+              box-shadow: 0 0 0 0 rgba(225, 12, 161, 0);
+            }
+          }
+          
+          @keyframes shimmer {
+            0% {
+              background-position: -200% 0;
+            }
+            100% {
+              background-position: 200% 0;
+            }
+          }
+          
+          .loading-input {
+            position: relative;
+            animation: pulse 2s infinite;
+          }
+          
+          .shimmer-effect {
+            background: linear-gradient(
+              90deg,
+              #F7F7F7 25%,
+              #FBB8D4 50%,
+              #F7F7F7 75%
+            );
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+          }
+        `}
+      </style>
 
-        {isLoading && (
-          <div
-            style={{
-              fontSize: "37px",
-              color: "#666",
-              fontWeight: "bold",
-              pointerEvents: "none",
-              position: "absolute",
-              left: "50%",
-              top: "50%",
-              transform: "translate(-50%, -50%)",
-            }}
-          >
-            ..채점중..
-          </div>
-        )}
-      </div>
-
-      {/* 버튼을 절대 위치로 고정 */}
-      <button
-        onClick={handleClick}
+      <div
+        className={`${isAnimating ? "rotate-border" : ""} ${
+          isLoading ? "loading-input shimmer-effect" : ""
+        }`}
         style={{
-          position: "absolute",
-          right: "20px", // 80px에서 20px로 조정
-          width: "40px",
-          height: "40px",
-          borderRadius: "30px",
-          background: "none",
-          border: "none",
-          cursor: isAnswered || isLoading ? "default" : "pointer",
-          padding: 0,
+          width: "1300px",
+          height: "119px",
+          border: isLoading ? "2px solid #E10CA1" : "1px solid #FBB8D4",
+          borderRadius: "26px",
           display: "flex",
+          justifyContent: "space-between",
           alignItems: "center",
-          justifyContent: "center",
-          flexShrink: 0, // 버튼 크기 고정
+          backgroundColor: isAnswered
+            ? "#E10CA1"
+            : isLoading
+            ? "transparent"
+            : "#F7F7F7",
+          paddingLeft: "30px",
+          paddingRight: "30px",
+          position: "relative",
+          transition: "all 0.3s ease",
+          boxShadow: isAnswered ? "0 6px 15px rgba(0, 0, 0, 0.2)" : "none",
+          overflow: "hidden",
         }}
-        disabled={isAnswered || isLoading}
       >
-        {!isLoading && !isAnswered && (
-          <img
-            src="/images/Send.png"
-            alt="Send"
+        {/* 텍스트 영역을 별도 컨테이너로 감싸기 */}
+        <div
+          style={{
+            flex: 1,
+            position: "relative",
+            marginRight: "20px",
+            zIndex: 5,
+          }}
+        >
+          <input
+            type="text"
+            placeholder="답을 입력해주세요."
+            value={answer}
+            onChange={(e) => setAnswer(e.target.value)}
+            readOnly={isAnswered || isLoading}
+            autoFocus
             style={{
-              width: "40px",
-              marginRight: "30px",
-              height: "40px",
-              objectFit: "contain", // 이미지 비율 유지
-              pointerEvents: "none",
+              fontSize: "37px",
+              border: "none",
+              background: "none",
+              display: isAnswered || isLoading ? "none" : "block",
+              outline: "none",
+              width: "100%",
+              color: "black",
             }}
           />
-        )}
-      </button>
-    </div>
+
+          {isAnswered && (
+            <div
+              style={{
+                fontSize: "37px",
+                color: "white",
+                fontWeight: "bold",
+                pointerEvents: "none",
+                position: "absolute",
+                left: "50%",
+                top: "50%",
+                transform: "translate(-50%, -50%)",
+                textShadow: "0 2px 4px rgba(0, 0, 0, 0.3)",
+              }}
+            >
+              +{score}점
+            </div>
+          )}
+
+          {isLoading && (
+            <div
+              style={{
+                fontSize: "37px",
+                color: "#E10CA1",
+                fontWeight: "bold",
+                pointerEvents: "none",
+                position: "absolute",
+                left: "50%",
+                top: "50%",
+                transform: "translate(-50%, -50%)",
+                textShadow: "0 0 10px rgba(225, 12, 161, 0.5)",
+              }}
+            >
+              채점중
+            </div>
+          )}
+        </div>
+
+        {/* 버튼을 인풋박스 내부 오른쪽에 배치 */}
+        <button
+          onClick={handleClick}
+          style={{
+            width: "40px",
+            height: "40px",
+            borderRadius: "50%",
+            background: "none",
+            border: "none",
+            cursor: isAnswered || isLoading ? "default" : "pointer",
+            padding: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexShrink: 0,
+            zIndex: 5,
+            transition: "transform 0.2s ease",
+            transform: isLoading ? "scale(0.9)" : "scale(1)",
+          }}
+          disabled={isAnswered || isLoading}
+        >
+          {!isLoading && !isAnswered && (
+            <img
+              src="/images/Send.png"
+              alt="Send"
+              style={{
+                width: "40px",
+                height: "40px",
+                objectFit: "contain",
+                pointerEvents: "none",
+                filter: "drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1))",
+              }}
+            />
+          )}
+
+          {isLoading && (
+            <div
+              style={{
+                width: "20px",
+                height: "20px",
+                border: "2px solid #E10CA1",
+                borderTop: "2px solid transparent",
+                borderRadius: "50%",
+                animation: "spin 1s linear infinite",
+              }}
+            />
+          )}
+        </button>
+      </div>
+
+      <style>
+        {`
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `}
+      </style>
+    </>
   );
 }

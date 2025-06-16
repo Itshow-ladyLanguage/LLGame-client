@@ -10,6 +10,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   const postUser = async () => {
     try {
@@ -29,7 +30,7 @@ const Login = () => {
       console.log(localStorage.getItem("userId"));
 
       // 페이지 이동
-      navigate('/camera');
+      navigate("/camera");
     } catch (e) {
       console.error("유저 생성 실패 : ", e);
       setError(error);
@@ -97,6 +98,7 @@ const Login = () => {
           }}
         >
           <input
+            autoFocus
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -115,11 +117,13 @@ const Login = () => {
         <button
           onClick={postUser}
           type="submit"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
           style={{
             width: "150px",
             height: "55px",
             borderRadius: "15px",
-            backgroundColor: "#F7F7F7",
+            backgroundColor: isHovered ? "#F0B1DD" : "#F7F7F7",
             border: "3px solid #E10CA1",
             outline: "none",
             color: "#E10CA1",
@@ -127,11 +131,12 @@ const Login = () => {
             fontFamily: "'Pretendard-Regular', sans-serif",
             fontWeight: 700,
             textAlign: "center",
-            marginLeft: "auto", // 오른쪽 배치
+            marginLeft: "auto",
             display: "block",
             marginTop: "30px",
             marginRight: "10%",
             cursor: "pointer",
+            transition: "background-color 0.3s ease", // 부드러운 전환
           }}
         >
           시작하기
