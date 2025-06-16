@@ -15,7 +15,7 @@ export default function ResultPages() {
     document.body.style.margin = "0";
 
     const capture = async () => {
-      await new Promise((resolve) => setTimeout(resolve, 500)); // 화면 렌더링이 되기 전까지 0.5초 대기
+      await new Promise((resolve) => setTimeout(resolve, 2000)); // 화면 렌더링이 되기 전까지 2초 대기
       const canvas = await html2canvas(document.body); // 화면 전체 캡쳐
       const imgUrl = canvas.toDataURL("image/jpg");
 

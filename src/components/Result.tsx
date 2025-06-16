@@ -2,27 +2,32 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
+type User = {
+  id: number;
+  name: string;
+  score: number;
+  profile_image: string;
+};
+
+
 export default function ResultPages() {
   const location = useLocation();
-
-  // SuQuizPages에서 전달받은 최종 점수
   const finalScore = Number(location.state?.finalScore ?? 0);
+  
+  const [isRankHovered, setIsRankHovered] = useState(false);
+  const [isExplainHovered, setIsExplainHovered] = useState(false);
+  const [isExplainClicked, setIsExplainClicked] = useState(false);
+  const [userProfileImage, setUserProfileImage] = useState<string>("");
+  const [rank, setRank] = useState<number | null>(null);
+  const [users, setUsers] = useState<User[]>([]);
+  const [scoreSaved, setScoreSaved] = useState(false); // 점수 저장 완료 여부
 
-  // 디버깅용: 전달받은 최종 점수 로그
-  useEffect(() => {
-    console.log("ResultPages - 전달받은 최종 점수:", finalScore);
-    console.log("location.state:", location.state);
-  }, [finalScore]);
+  const userId = localStorage.getItem("userId");
+  const navigate = useNavigate();
 
   useEffect(() => {
     document.body.style.margin = "0";
   }, []);
-
-  const [isRankHovered, setIsRankHovered] = useState(false);
-  const [isExplainHovered, setIsExplainHovered] = useState(false);
-  const [isExplainClicked, setIsExplainClicked] = useState(false);
-  const userId = localStorage.getItem("userId");
-  const navigate = useNavigate();
 
   // 점수에 따른 결과 메시지 반환 함수
   const getResultMessage = (score: number) => {
@@ -77,7 +82,6 @@ export default function ResultPages() {
         subtitle: "💯 센스 만렙 💯",
       };
     } else {
-      // 999점을 초과하는 경우 최고 등급으로 처리
       return {
         title: '"여자친구 마음 읽기 마스터"',
         subtitle: "💯 센스 만렙 💯",
@@ -87,10 +91,11 @@ export default function ResultPages() {
 
   const resultMessage = getResultMessage(finalScore);
 
-  // 서버에 결과 저장하는 useEffect
+  // 서버에 결과 저장
   useEffect(() => {
     const saveResultToServer = async () => {
       try {
+        console.log("점수 저장 시작:", { finalScore, userId });
         const response = await axios.patch(
           `${import.meta.env.VITE_BASE_URL}/users/${userId}`,
           {
@@ -98,19 +103,17 @@ export default function ResultPages() {
             type: resultMessage.subtitle,
           }
         );
-        console.log("점수 및 유형 저장:", response.data);
+        console.log("점수 저장 완료:", response.data);
+        setScoreSaved(true); // 점수 저장 완료 표시
       } catch (error) {
         console.error("서버 저장 실패:", error);
       }
     };
 
-    if (finalScore > 0 && userId) {
+    if (finalScore > 0 && userId && !scoreSaved) {
       saveResultToServer();
     }
-  }, [finalScore, resultMessage.title, userId]);
-
-  // 사용자 정보를 가져오는 state 추가
-  const [userProfileImage, setUserProfileImage] = useState<string>("");
+  }, [finalScore, resultMessage.subtitle, userId, scoreSaved]);
 
   // 사용자 정보 가져오기
   useEffect(() => {
@@ -131,6 +134,53 @@ export default function ResultPages() {
       fetchUserData();
     }
   }, [userId]);
+
+  // 전체 사용자 목록과 순위 계산 (점수 저장 후에 실행)
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        console.log("랭킹 계산 시작");
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/users`);
+        const allUsers = response.data;
+        setUsers(allUsers);
+
+        console.log("전체 사용자 목록:", allUsers);
+        console.log("현재 userId:", userId, "타입:", typeof userId);
+
+        // 랭킹 계산: 점수를 기준으로 내림차순 정렬
+        const sortedUsers = allUsers.sort((a: any, b: any) => b.score - a.score);
+        console.log("정렬된 사용자 목록 (상위 5명):", sortedUsers.slice(0, 5));
+
+        // 현재 사용자 찾기
+        const userRank = sortedUsers.findIndex((user: any) => {
+          const match = String(user.id) === String(userId);
+          if (match) {
+            console.log("사용자 찾음:", user);
+          }
+          return match;
+        }) + 1;
+
+        console.log("계산된 순위:", userRank);
+        
+        if (userRank === 0) {
+          console.error("사용자를 찾을 수 없습니다!");
+          console.log("찾으려는 userId:", userId);
+          console.log("서버의 user.id 목록:", allUsers.map((u: User) => ({ id: u.id, type: typeof u.id })));
+        }
+        
+        setRank(userRank > 0 ? userRank : null);
+      } catch (error) {
+        console.error("사용자 목록 가져오기 실패:", error);
+      }
+    };
+
+    // 점수가 저장된 후에만 랭킹 계산
+    if (userId && scoreSaved) {
+      fetchUsers();
+    }
+  }, [userId, scoreSaved]);
 
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
@@ -168,12 +218,12 @@ export default function ResultPages() {
               width: "180px",
               height: "180px",
               marginBottom: "36px",
-              borderRadius: "50%", // 프로필 이미지를 원형으로
+              borderRadius: "50%",
               objectFit: "cover",
             }}
           />
         )}
-        <p style={{ fontSize: "33px", margin: "0px" }}>순위 : 1등</p>
+        <p style={{ fontSize: "33px", margin: "0px" }}>순위 : {rank}등</p>
         <p style={{ fontSize: "33px", margin: "0px" }}>점수 : {finalScore}점</p>
 
         <div
@@ -184,7 +234,6 @@ export default function ResultPages() {
             position: "relative",
           }}
         >
-          {/* 랭킹 화면 버튼 */}
           <button
             style={{
               width: "204px",
@@ -203,7 +252,6 @@ export default function ResultPages() {
             랭킹 화면
           </button>
 
-          {/* 게임 해설 버튼 */}
           <button
             style={{
               width: "204px",
@@ -219,20 +267,19 @@ export default function ResultPages() {
             }}
             onMouseEnter={() => setIsExplainHovered(true)}
             onMouseLeave={() => setIsExplainHovered(false)}
-            onClick={() => setIsExplainClicked((prev) => !prev)} // toggle
+            onClick={() => setIsExplainClicked((prev) => !prev)}
           >
             게임 해설
           </button>
         </div>
 
-        {/* 게임 해설 이미지 토글 */}
         {isExplainClicked && (
           <img
             src="/images/Qr.png"
             alt="게임 해설 이미지"
             style={{
               position: "absolute",
-              left: "60%", // 버튼 오른쪽
+              left: "60%",
               top: "55%",
               width: "200px",
               height: "200px",
