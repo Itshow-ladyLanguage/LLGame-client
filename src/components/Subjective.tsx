@@ -13,7 +13,7 @@ export default function Subjective({ question }: { question: string }) {
         textAlign: "center", // 텍스트 가운데 정렬
       }}
     >
-      <p style={{ fontSize: "39px" }}>Q. {question}</p>
+      <p style={{ fontSize: "39px" }}>{question}</p>
     </div>
   );
 }

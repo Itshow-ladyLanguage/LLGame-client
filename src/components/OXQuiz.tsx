@@ -14,7 +14,7 @@ export default function OXQuiz({ question }: { question: string }) {
         fontWeight: 450,
       }}
     >
-      <p style={{ fontSize: "39px" }}>Q. {question}</p>
+      <p style={{ fontSize: "39px" }}>Q {question}</p>
     </div>
   );
 }

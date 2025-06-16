@@ -8,8 +8,8 @@ const Login = () => {
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(false); // 로딩되는지 여부
-  const [error, setError] = useState(null); //에러
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const postUser = async () => {
     try {
@@ -22,10 +22,14 @@ const Login = () => {
         email,
       });
       console.log("유저 생성 성공", res.data);
-      navigate({
-        pathname: '/camera',
-        search: '?id=' + res.data.id
-      });
+
+      // 로컬스토리지에 유저 ID 저장
+      localStorage.setItem("userId", res.data.id);
+      console.log(localStorage.getItem("userId"));
+      console.log(localStorage.getItem("userId"));
+
+      // 페이지 이동
+      navigate('/camera');
     } catch (e) {
       console.error("유저 생성 실패 : ", e);
       setError(error);
