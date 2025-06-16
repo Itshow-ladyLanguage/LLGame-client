@@ -16,6 +16,8 @@ const Camera = () => {
   const [searchParams] = useSearchParams();
   const userid = parseInt(searchParams.get("id") as string);
 
+  const userId = localStorage.getItem("userId");
+
   const videoConstraints = {
     facingMode: "user",
   };
@@ -33,12 +35,17 @@ const Camera = () => {
           .then((snapshot) => getDownloadURL(snapshot.ref))
           .then((downloadURL) => {
             setPhoto(downloadURL); // URL 화면에 표시
+            console.log("업로드된 이미지 URL:", downloadURL);
             return axios.patch(
-              `${import.meta.env.VITE_BASE_URL}/users/${userid}`,
+              `${import.meta.env.VITE_BASE_URL}/users/${userId}`,
               {
                 profile_image: downloadURL,
+                
               }
             );
+          })
+          .then((res) => {
+            console.log("사진 저장 완료", res.data);
           })
           .catch((err) => {
             console.error("이미지 업로드 실패:", err);
