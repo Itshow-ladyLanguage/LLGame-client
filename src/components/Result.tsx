@@ -22,6 +22,7 @@ export default function ResultPages() {
   const [isExplainHovered, setIsExplainHovered] = useState(false);
   const [isExplainClicked, setIsExplainClicked] = useState(false);
   const userId = localStorage.getItem("userId");
+  const image = localStorage.getItem("profile_image"); // 사용하지 않는 변수지만 유지
 
   // 점수에 따른 결과 메시지 반환 함수
   const getResultMessage = (score: number) => {
@@ -76,9 +77,9 @@ export default function ResultPages() {
         subtitle: "센스 만렙",
       };
     } else {
-      // 9999점을 초과하는 경우 최고 등급으로 처리
+      // 999점을 초과하는 경우 최고 등급으로 처리
       return {
-        title: '💯"여자친구 마음 읽기 마스터"💯',
+        title: '💯 "여자친구 마음 읽기 마스터" 💯',
         subtitle: "센스 만렙",
       };
     }
@@ -86,6 +87,7 @@ export default function ResultPages() {
 
   const resultMessage = getResultMessage(finalScore);
 
+  // 서버에 결과 저장하는 useEffect
   useEffect(() => {
     const saveResultToServer = async () => {
       try {
@@ -99,10 +101,31 @@ export default function ResultPages() {
       }
     };
 
-    if (finalScore > 0) {
+    if (finalScore > 0 && userId) {
       saveResultToServer();
     }
-  }, [finalScore, resultMessage, userId]);
+  }, [finalScore, resultMessage.title, userId]);
+
+  // 사용자 정보를 가져오는 state 추가
+  const [userProfileImage, setUserProfileImage] = useState<string>("");
+
+  // 사용자 정보 가져오기
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/users/${userId}`);
+        if (response.data && response.data.profile_image) {
+          setUserProfileImage(response.data.profile_image);
+        }
+      } catch (error) {
+        console.error("사용자 정보 불러오기 실패:", error);
+      }
+    };
+
+    if (userId) {
+      fetchUserData();
+    }
+  }, [userId]);
 
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
@@ -132,15 +155,19 @@ export default function ResultPages() {
           {resultMessage.title} <br />
           <strong>{resultMessage.subtitle}</strong>
         </p>
-        <img
-          src="/images/img.png"
-          alt="Profile"
-          style={{
-            width: "180px",
-            height: "180px",
-            marginBottom: "36px",
-          }}
-        />
+        {userProfileImage && (
+          <img
+            src={userProfileImage}
+            alt="Profile"
+            style={{
+              width: "180px",
+              height: "180px",
+              marginBottom: "36px",
+              borderRadius: "50%", // 프로필 이미지를 원형으로
+              objectFit: "cover",
+            }}
+          />
+        )}
         <p style={{ fontSize: "33px", margin: "0px" }}>순위 : 1등</p>
         <p style={{ fontSize: "33px", margin: "0px" }}>점수 : {finalScore}점</p>
 
