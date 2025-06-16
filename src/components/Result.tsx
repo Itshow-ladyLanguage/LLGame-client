@@ -1,6 +1,18 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 export default function ResultPages() {
+  const location = useLocation();
+
+  // SuQuizPages에서 전달받은 최종 점수
+  const finalScore = Number(location.state?.finalScore ?? 0);
+
+  // 디버깅용: 전달받은 최종 점수 로그
+  useEffect(() => {
+    console.log("ResultPages - 전달받은 최종 점수:", finalScore);
+    console.log("location.state:", location.state);
+  }, [finalScore]);
+
   useEffect(() => {
     document.body.style.margin = "0";
   }, []);
@@ -8,6 +20,69 @@ export default function ResultPages() {
   const [isRankHovered, setIsRankHovered] = useState(false);
   const [isExplainHovered, setIsExplainHovered] = useState(false);
   const [isExplainClicked, setIsExplainClicked] = useState(false);
+
+  // 점수에 따른 결과 메시지 반환 함수
+  const getResultMessage = (score: number) => {
+    if (score >= 0 && score <= 100) {
+      return {
+        title: '🚨"여자친구의 마음은 퀴즈보다 어렵다..."🚨',
+        subtitle: "감 잡아야 하는 남친",
+      };
+    } else if (score >= 101 && score <= 200) {
+      return {
+        title: '😅 "여자친구 마음, 난이도 하~중"😅',
+        subtitle: "감 잡는 중인 남친",
+      };
+    } else if (score >= 201 && score <= 300) {
+      return {
+        title: '🤔 "여자친구의 마음은 미로 같다..."🤔',
+        subtitle: "연애 초보 탐험가",
+      };
+    } else if (score >= 301 && score <= 400) {
+      return {
+        title: '💬 "여자친구의 마음을 70%쯤은 안다고 믿고 싶다..."💬',
+        subtitle: "나름 노력파 남친",
+      };
+    } else if (score >= 401 && score <= 500) {
+      return {
+        title: '🛠️ "괜찮아, 더 노력하면 돼!"🛠️',
+        subtitle: "센스 업그레이드 진행 중!",
+      };
+    } else if (score >= 501 && score <= 600) {
+      return {
+        title: '📚"조금만 더 공부하면 완벽할 텐데!"📚',
+        subtitle: "센스 업그레이드형 남친",
+      };
+    } else if (score >= 601 && score <= 700) {
+      return {
+        title: '🫣 "이거 어떻게 알았어?"🫣',
+        subtitle: "귀신같은 눈치남!",
+      };
+    } else if (score >= 701 && score <= 800) {
+      return {
+        title: '🕶️ "설마.. 내 생각 읽었어?"🕶️',
+        subtitle: "눈치 백단 남친!",
+      };
+    } else if (score >= 801 && score <= 900) {
+      return {
+        title: "💘텔레파시 통하는 완벽 남친!💘",
+        subtitle: "연애의 달인!",
+      };
+    } else if (score >= 901 && score <= 999) {
+      return {
+        title: '💯"여자친구 마음 읽기 마스터"💯',
+        subtitle: "센스 만렙",
+      };
+    } else {
+      // 9999점을 초과하는 경우 최고 등급으로 처리
+      return {
+        title: '💯"여자친구 마음 읽기 마스터"💯',
+        subtitle: "센스 만렙",
+      };
+    }
+  };
+
+  const resultMessage = getResultMessage(finalScore);
 
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
@@ -34,8 +109,8 @@ export default function ResultPages() {
             marginBottom: "45px",
           }}
         >
-          💯"여자친구 마음 읽기 마스터"💯 <br />
-          <strong>센스 만렙</strong>
+          {resultMessage.title} <br />
+          <strong>{resultMessage.subtitle}</strong>
         </p>
         <img
           src="/images/img.png"
@@ -47,7 +122,7 @@ export default function ResultPages() {
           }}
         />
         <p style={{ fontSize: "33px", margin: "0px" }}>순위 : 1등</p>
-        <p style={{ fontSize: "33px", margin: "0px" }}>점수 : 45점</p>
+        <p style={{ fontSize: "33px", margin: "0px" }}>점수 : {finalScore}점</p>
 
         <div
           style={{
