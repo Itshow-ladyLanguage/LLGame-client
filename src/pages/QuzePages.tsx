@@ -159,7 +159,16 @@ export default function QuzeContainer() {
           resetTrigger={resetTrigger}
         />
       </div>
-      <PageNumber current={currentQuizIndex + 1} total={quizData.length} />
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "35px",
+        }}
+      >
+        <PageNumber current={currentQuizIndex + 1} total={quizData.length} />
+      </div>
     </div>
   );
 }

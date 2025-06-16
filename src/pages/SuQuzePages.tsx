@@ -136,7 +136,9 @@ export default function SuQuizPages() {
           quizId={currentQuiz?.id || `quiz-${currentIndex}`}
         />
       </div>
-      <PageNumber current={currentIndex + 10} total={quizData.length} />
+      <div style={{ marginTop: "35px", marginRight: "2.5%" }}>
+        <PageNumber current={currentIndex + 10} total={quizData.length} />
+      </div>
     </div>
   );
 }

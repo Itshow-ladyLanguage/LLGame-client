@@ -186,10 +186,20 @@ export default function OXQuizPages() {
       </div>
 
       {/* 페이지 번호 표시 컴포넌트 */}
-      <PageNumber
-        current={currentIndex + 7} // 이전 QuizPages 6개 + 현재 OX 퀴즈 번호
-        total={6 + quizData.length} // 전체 퀴즈 수 (이전 퀴즈 6개 + OX 퀴즈 개수)
-      />
+
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "35px",
+        }}
+      >
+        <PageNumber
+          current={currentIndex + 7} // 이전 QuizPages 6개 + 현재 OX 퀴즈 번호
+          total={6 + quizData.length} // 전체 퀴즈 수 (이전 퀴즈 6개 + OX 퀴즈 개수)
+        />
+      </div>
     </div>
   );
 }
