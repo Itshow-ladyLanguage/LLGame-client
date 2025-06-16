@@ -39,6 +39,8 @@ export default function Profile(props: ProfileProps) {
 					width: "93px",
 					height: "93px",
 					marginLeft: "80px",
+					objectFit: "cover", // 이미지를 비율 유지 & 꽉 채우게
+    				borderRadius: "50px",
 				}}
 			/>
 			<p
