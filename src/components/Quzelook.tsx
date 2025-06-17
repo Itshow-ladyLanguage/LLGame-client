@@ -15,6 +15,7 @@ export default function Quzelook({ question }: QuzelookProps) {
         alignItems: "center", // 세로 중앙
         justifyContent: "center", // 가로 중앙
         textAlign: "center", // 텍스트 중앙 정렬
+        whiteSpace: 'pre-line'
       }}
     >
       <p style={{ fontSize: "39px" }}>{question}</p>

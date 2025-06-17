@@ -9,7 +9,6 @@ type User = {
   profile_image: string;
 };
 
-
 export default function ResultPages() {
   const location = useLocation();
   const finalScore = Number(location.state?.finalScore ?? 0);
@@ -18,9 +17,11 @@ export default function ResultPages() {
   const [isExplainHovered, setIsExplainHovered] = useState(false);
   const [isExplainClicked, setIsExplainClicked] = useState(false);
   const [userProfileImage, setUserProfileImage] = useState<string>("");
+  const [userType, setUserType] = useState<string>(""); // 서버에서 가져온 type
   const [rank, setRank] = useState<number | null>(null);
   const [users, setUsers] = useState<User[]>([]);
   const [scoreSaved, setScoreSaved] = useState(false); // 점수 저장 완료 여부
+  const [selectedType, setSelectedType] = useState<string>(""); // 선택된 유형 저장
 
   const userId = localStorage.getItem("userId");
   const navigate = useNavigate();
@@ -29,58 +30,70 @@ export default function ResultPages() {
     document.body.style.margin = "0";
   }, []);
 
-  // 점수에 따른 결과 메시지 반환 함수
+  // 점수에 따른 결과 메시지 반환 함수 (랜덤 선택) - 한 번만 실행되도록 수정
   const getResultMessage = (score: number) => {
-    if (score >= 0 && score <= 100) {
-      return {
-        title: '"여자친구의 마음은 퀴즈보다 어렵다..."',
-        subtitle: "🚨 감 잡아야 하는 남친 🚨",
-      };
-    } else if (score >= 101 && score <= 200) {
-      return {
-        title: '"여자친구 마음, 난이도 하~중"',
-        subtitle: "😅 감 잡는 중인 남친 😅",
-      };
-    } else if (score >= 201 && score <= 300) {
-      return {
-        title: '"여자친구의 마음은 미로 같다..."',
-        subtitle: "🤔 연애 초보 탐험가 🤔",
-      };
-    } else if (score >= 301 && score <= 400) {
-      return {
-        title: '"여자친구의 마음을 70%쯤은 안다고 믿고 싶다..."',
-        subtitle: "💬 나름 노력파 남친 💬",
-      };
-    } else if (score >= 401 && score <= 500) {
-      return {
-        title: '"괜찮아, 더 노력하면 돼!"',
-        subtitle: "🛠️ 센스 업그레이드 진행 중인 남친 🛠️",
-      };
-    } else if (score >= 501 && score <= 600) {
-      return {
-        title: '"조금만 더 공부하면 완벽할 텐데!"',
-        subtitle: "📚 센스 업그레이드형 남친 📚",
-      };
-    } else if (score >= 601 && score <= 700) {
-      return {
-        title: '"이거 어떻게 알았어?"',
-        subtitle: "🤨 귀신같은 눈치남! 🤨",
-      };
-    } else if (score >= 701 && score <= 800) {
-      return {
-        title: '"설마.. 내 생각 읽었어?"',
-        subtitle: "🕶️ 눈치 백단 남친! 🕶️",
-      };
-    } else if (score >= 801 && score <= 900) {
-      return {
-        title: '"텔레파시 통하는 완벽 남친!"',
-        subtitle: "💘 연애의 달인! 💘",
-      };
-    } else if (score >= 901 && score <= 999) {
-      return {
-        title: '"여자친구 마음 읽기 마스터"',
-        subtitle: "💯 센스 만렙 💯",
-      };
+    const random = Math.floor(Math.random() * 2); // 0 또는 1
+    
+    if (score >= 0 && score <= 199) {
+      const options = [
+        {
+          title: '"여자친구의 마음은 퀴즈보다 어렵다..."',
+          subtitle: "🚨 감 잡아야 하는 남친 🚨",
+        },
+        {
+          title: '"여자친구 마음, 난이도 하~중"',
+          subtitle: "😅 감 잡는 중인 남친 😅",
+        }
+      ];
+      return options[random];
+    } else if (score >= 200 && score <= 399) {
+      const options = [
+        {
+          title: '"여자친구의 마음은 미로 같다..."',
+          subtitle: "🤔 연애 초보 탐험가 🤔",
+        },
+        {
+          title: '"여자친구의 마음을 70%쯤은 안다고 믿고 싶다..."',
+          subtitle: "💬 나름 노력파 남친 💬",
+        }
+      ];
+      return options[random];
+    } else if (score >= 400 && score <= 599) {
+      const options = [
+        {
+          title: '"괜찮아, 더 노력하면 돼!"',
+          subtitle: "🛠️ 센스 업그레이드 진행 중인 남친 🛠️",
+        },
+        {
+          title: '"조금만 더 공부하면 완벽할 텐데!"',
+          subtitle: "📚 센스 업그레이드형 남친 📚",
+        }
+      ];
+      return options[random];
+    } else if (score >= 600 && score <= 799) {
+      const options = [
+        {
+          title: '"이거 어떻게 알았어?"',
+          subtitle: "🤨 귀신같은 눈치남! 🤨",
+        },
+        {
+          title: '"설마.. 내 생각 읽었어?"',
+          subtitle: "🕶️ 눈치 백단 남친! 🕶️",
+        }
+      ];
+      return options[random];
+    } else if (score >= 800 && score <= 999) {
+      const options = [
+        {
+          title: '"텔레파시 통하는 완벽 남친!"',
+          subtitle: "💘 연애의 달인! 💘",
+        },
+        {
+          title: '"여자친구 마음 읽기 마스터"',
+          subtitle: "💯 센스 만렙 💯",
+        }
+      ];
+      return options[random];
     } else {
       return {
         title: '"여자친구 마음 읽기 마스터"',
@@ -89,18 +102,69 @@ export default function ResultPages() {
     }
   };
 
-  const resultMessage = getResultMessage(finalScore);
+  // 표시할 결과 메시지 결정 (서버에서 가져온 type이 있으면 사용, 없으면 선택된 유형 사용)
+  const getDisplayMessage = () => {
+    if (userType) {
+      // 서버에서 가져온 type으로 title 찾기
+      const allOptions = [
+        { title: '"여자친구의 마음은 퀴즈보다 어렵다..."', subtitle: "🚨 감 잡아야 하는 남친 🚨" },
+        { title: '"여자친구 마음, 난이도 하~중"', subtitle: "😅 감 잡는 중인 남친 😅" },
+        { title: '"여자친구의 마음은 미로 같다..."', subtitle: "🤔 연애 초보 탐험가 🤔" },
+        { title: '"여자친구의 마음을 70%쯤은 안다고 믿고 싶다..."', subtitle: "💬 나름 노력파 남친 💬" },
+        { title: '"괜찮아, 더 노력하면 돼!"', subtitle: "🛠️ 센스 업그레이드 진행 중인 남친 🛠️" },
+        { title: '"조금만 더 공부하면 완벽할 텐데!"', subtitle: "📚 센스 업그레이드형 남친 📚" },
+        { title: '"이거 어떻게 알았어?"', subtitle: "🤨 귀신같은 눈치남! 🤨" },
+        { title: '"설마.. 내 생각 읽었어?"', subtitle: "🕶️ 눈치 백단 남친! 🕶️" },
+        { title: '"텔레파시 통하는 완벽 남친!"', subtitle: "💘 연애의 달인! 💘" },
+        { title: '"여자친구 마음 읽기 마스터"', subtitle: "💯 센스 만렙 💯" }
+      ];
+      
+      const foundOption = allOptions.find(option => option.subtitle === userType);
+      return foundOption || { title: "결과 확인 중...", subtitle: userType };
+    }
+    
+    // 선택된 유형이 있으면 사용, 없으면 로딩 표시
+    if (selectedType) {
+      const allOptions = [
+        { title: '"여자친구의 마음은 퀴즈보다 어렵다..."', subtitle: "🚨 감 잡아야 하는 남친 🚨" },
+        { title: '"여자친구 마음, 난이도 하~중"', subtitle: "😅 감 잡는 중인 남친 😅" },
+        { title: '"여자친구의 마음은 미로 같다..."', subtitle: "🤔 연애 초보 탐험가 🤔" },
+        { title: '"여자친구의 마음을 70%쯤은 안다고 믿고 싶다..."', subtitle: "💬 나름 노력파 남친 💬" },
+        { title: '"괜찮아, 더 노력하면 돼!"', subtitle: "🛠️ 센스 업그레이드 진행 중인 남친 🛠️" },
+        { title: '"조금만 더 공부하면 완벽할 텐데!"', subtitle: "📚 센스 업그레이드형 남친 📚" },
+        { title: '"이거 어떻게 알았어?"', subtitle: "🤨 귀신같은 눈치남! 🤨" },
+        { title: '"설마.. 내 생각 읽었어?"', subtitle: "🕶️ 눈치 백단 남친! 🕶️" },
+        { title: '"텔레파시 통하는 완벽 남친!"', subtitle: "💘 연애의 달인! 💘" },
+        { title: '"여자친구 마음 읽기 마스터"', subtitle: "💯 센스 만렙 💯" }
+      ];
+      
+      const foundOption = allOptions.find(option => option.subtitle === selectedType);
+      return foundOption || { title: "결과 확인 중...", subtitle: selectedType };
+    }
+    
+    return { title: "결과 확인 중...", subtitle: "잠시만 기다려주세요..." };
+  };
+
+  const displayMessage = getDisplayMessage();
+
+  // 컴포넌트 마운트 시 유형 결정 (한 번만 실행)
+  useEffect(() => {
+    if (finalScore > 0 && !selectedType) {
+      const result = getResultMessage(finalScore);
+      setSelectedType(result.subtitle);
+    }
+  }, [finalScore, selectedType]);
 
   // 서버에 결과 저장
   useEffect(() => {
     const saveResultToServer = async () => {
       try {
-        console.log("점수 저장 시작:", { finalScore, userId });
+        console.log("점수 저장 시작:", { finalScore, selectedType, userId });
         const response = await axios.patch(
           `${import.meta.env.VITE_BASE_URL}/users/${userId}`,
           {
             score: finalScore,
-            type: resultMessage.subtitle,
+            type: selectedType, // 미리 선택된 유형 사용
           }
         );
         console.log("점수 저장 완료:", response.data);
@@ -110,20 +174,21 @@ export default function ResultPages() {
       }
     };
 
-    if (finalScore > 0 && userId && !scoreSaved) {
+    if (finalScore > 0 && userId && !scoreSaved && selectedType) {
       saveResultToServer();
     }
-  }, [finalScore, resultMessage.subtitle, userId, scoreSaved]);
+  }, [finalScore, userId, scoreSaved, selectedType]);
 
-  // 사용자 정보 가져오기
+  // 사용자 정보 가져오기 (type도 함께)
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_BASE_URL}/users/${userId}`
         );
-        if (response.data && response.data.profile_image) {
+        if (response.data) {
           setUserProfileImage(response.data.profile_image);
+          setUserType(response.data.type); // 서버에 저장된 type 사용
         }
       } catch (error) {
         console.error("사용자 정보 불러오기 실패:", error);
@@ -207,8 +272,8 @@ export default function ResultPages() {
             marginBottom: "45px",
           }}
         >
-          {resultMessage.title} <br />
-          <strong>{resultMessage.subtitle}</strong>
+          {displayMessage.title} <br />
+          <strong>{displayMessage.subtitle}</strong>
         </p>
         {userProfileImage && (
           <img

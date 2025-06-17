@@ -11,6 +11,7 @@ export default function OXQuiz({ question }: { question: string }) {
         alignItems: "center",
         justifyContent: "center",
         textAlign: "center",
+        whiteSpace: 'pre-line',
         fontWeight: 450,
       }}
     >

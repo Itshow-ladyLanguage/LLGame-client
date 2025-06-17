@@ -12,6 +12,13 @@ const Login = () => {
   const [error, setError] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
 
+  const handleNameChange = (e) => {
+    const value = e.target.value;
+    if (value.length <= 7) {
+      setName(value);
+    }
+  };
+
   const postUser = async () => {
     try {
       setLoading(true);
@@ -101,10 +108,11 @@ const Login = () => {
             autoFocus
             type="text"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={handleNameChange}
             placeholder="이름을 적어주세요."
             className="input-box"
             style={{ marginBottom: "20px" }}
+            maxLength={7}
           />
           <input
             type="email"
