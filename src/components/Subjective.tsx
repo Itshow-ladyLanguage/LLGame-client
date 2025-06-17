@@ -11,6 +11,8 @@ export default function Subjective({ question }: { question: string }) {
         justifyContent: "center", // 가로 정렬
         padding: "0 40px",
         textAlign: "center", // 텍스트 가운데 정렬
+        whiteSpace: 'pre-line'
+
       }}
     >
       <p style={{ fontSize: "39px" }}>{question}</p>

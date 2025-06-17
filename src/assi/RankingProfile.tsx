@@ -9,6 +9,7 @@ interface CoverButtonDesignProps {
   labelColor?: string;
   hoverLabelColor?: string;
 }
+
 export default function RankingProfile() {
   const [users, setUsers] = useState<Object[]>([]);
   const [loading, setLoading] = useState(false);
@@ -32,6 +33,10 @@ export default function RankingProfile() {
       setLoading(false);
     }
   };
+
+  // 현재 로그인한 사용자 ID 가져오기
+  const currentUserId = localStorage.getItem("userId");
+
   return (
     <div>
       {users.map((user: any, index: number) => (
@@ -43,6 +48,7 @@ export default function RankingProfile() {
           score={user.score}
           description={user.type}
           rankColor="#EE6983"
+          isCurrentUser={user.id.toString() === currentUserId}
         />
       ))}
     </div>
