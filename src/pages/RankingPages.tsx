@@ -35,7 +35,7 @@ export default function RankingPages() {
               cursor: "pointer",
             }} />
         </div>
-          <p style={{ fontSize: "42px", margin: "0px" }}>
+          <p style={{ fontSize: "38px", margin: "0px" }}>
             시작화면으로 돌아가기
           </p>
         </div>

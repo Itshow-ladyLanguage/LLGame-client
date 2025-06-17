@@ -59,13 +59,13 @@ function FixedHeaderPage(): React.ReactElement {
               transition: "margin-top 0.3s ease",
             }}
           />
-          <p style={{ fontSize: "42px", margin: "0px" }}>
+          <p style={{ fontSize: "38px", margin: "0px" }}>
             랭킹화면으로 돌아가기
           </p>
         </div>
       </header>
 
-      <div style={{ marginTop: "630px", marginBottom: "1000px" }}>
+      <div style={{ marginTop: "630px", marginBottom: "1000px", }}>
         <Pyramid />
       </div>
 

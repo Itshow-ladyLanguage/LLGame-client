@@ -40,7 +40,7 @@ export default function Emoticon() {
       </div>
       <div id="section-4" style={{ marginBottom: "700px" }}>
         <Emo
-          typetitle="🫣 이거 어떻게 알았어? 귀신같은 눈치남"
+          typetitle="👻 이거 어떻게 알았어? 귀신같은 눈치남"
           typesubtitle="정말 말도 안 했는데 어떻게 알았지...? 소름 돋는 직감력!"
           imgemo="/images/im4.png"
           numbersign="#여자 상태 파악 #쪽집게 #타이밍귀신 #눈치"
