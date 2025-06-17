@@ -23,7 +23,11 @@ export default function CoverButton() {
         />
         <CoverButtonDesign
           label="랭킹"
-          onClick={() => navigate("/RankingPages")}
+          onClick={() => {
+            // localStorage 초기화 (이전 사용자 정보 제거)
+            localStorage.removeItem("userId");
+            navigate("/RankingPages");
+          }}
           labelColor="#000000"
           hoverLabelColor="#FFFFFF"
           hoverbackcolor="#E10CA1"

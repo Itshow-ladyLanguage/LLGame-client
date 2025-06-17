@@ -1,21 +1,49 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Ranking from "../components/Ranking";
 import { useNavigate } from "react-router-dom";
 
 export default function RankingPages() {
+  const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
-  // body margin 제거는 useEffect 안에서 한 번만 실행하는 걸 권장합니다
+
   useEffect(() => {
+    // body margin 제거
     document.body.style.margin = "0";
+
+    // 페이지 진입 시 스크롤을 맨 위로 초기화
+    window.scrollTo(0, 0);
+
+    // 스크롤 이벤트 리스너 추가
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleBackClick = () => {
+    navigate("/CoverPages");
+  };
 
   return (
     <div>
-      <div
+      {/* 고정 헤더 */}
+      <header
         style={{
-          marginLeft: "141px",
-          marginTop: "99px",
-          marginBottom: "110px",
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          backgroundColor: "white",
+          height: "150px",
+          zIndex: 999,
+          display: "flex",
+          justifyContent: "flex-start",
+          alignItems: "center",
+          transition: "all 0.3s ease",
+          paddingTop: scrolled ? "0px" : "55px",
+          boxShadow: scrolled ? "0 2px 10px rgba(0,0,0,0.1)" : "none",
         }}
       >
         <div
@@ -23,28 +51,34 @@ export default function RankingPages() {
             display: "flex",
             alignItems: "center",
             gap: "20px",
+            marginLeft: "141px",
+            cursor: "pointer",
           }}
+          onClick={handleBackClick}
         >
-        <div onClick={() => navigate("/CoverPages")} style={{ cursor: "pointer" }}>
-          <img src="/images/arrow.png"
+          <img
+            src="/images/arrow.png"
             alt="뒤로 가기"
             style={{
               width: "40px",
               height: "37.66px",
               marginTop: "3px",
-              cursor: "pointer",
-            }} />
-        </div>
+              transition: "margin-top 0.3s ease",
+            }}
+          />
           <p style={{ fontSize: "38px", margin: "0px" }}>
             시작화면으로 돌아가기
           </p>
         </div>
-      </div>
+      </header>
+
+      {/* 메인 콘텐츠 */}
       <div
         style={{
           display: "flex",
-          flexDirection: "column", // Vertical layout
-          alignItems: "center", // Center horizontally
+          flexDirection: "column",
+          alignItems: "center",
+          marginTop: "250px", // 헤더 높이만큼 여백 추가
           marginBottom: "100px",
         }}
       >
