@@ -12,8 +12,8 @@ export default function Profile(props: ProfileProps) {
 		<div
 			style={{
 				background: "#ffffff",
-				width: "1147.5px",
-				height: "127.4px",
+				width: "1087px",
+                height: "110px",
 				border: "2px solid #7a1d36",
 				borderRadius: "20px",
 				display: "flex",
@@ -24,7 +24,7 @@ export default function Profile(props: ProfileProps) {
 			<p
 				style={{
 					width: "60px",
-					fontSize: "33px",
+					fontSize: "28px",
 					marginLeft: "31px",
 					color: props.rankColor || "#000000",
 					fontWeight: "bold",
@@ -45,7 +45,7 @@ export default function Profile(props: ProfileProps) {
 			/>
 			<p
 				style={{
-					fontSize: "33px",
+					fontSize: "28px",
 					marginLeft: "39px",
 					fontWeight: "bold",
 				}}
@@ -54,7 +54,7 @@ export default function Profile(props: ProfileProps) {
 			</p>
 			<p
 				style={{
-					fontSize: "30px",
+					fontSize: "25px",
 					marginLeft: "8px",
 					fontWeight: "bold",
 				}}
@@ -63,10 +63,10 @@ export default function Profile(props: ProfileProps) {
 			</p>
 			<p
 				style={{
-					fontSize: "33px",
+					fontSize: "28px",
 					marginLeft: "auto",
 					marginRight: "44.5px",
-					fontWeight: "bold",
+					fontWeight: "500",
 				}}
 			>
 				{props.description}

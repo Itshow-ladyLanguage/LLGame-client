@@ -21,15 +21,15 @@ export default function Emo(props: EmoProps) {
       }}
     >
       <div style={{ textAlign: "center" }}>
-        <p style={{ fontSize: "40px", margin: "0", marginBottom: "20px" }}>
+        <p style={{ fontSize: "35px", margin: "0", marginBottom: "20px" }}>
           {props.typetitle}
         </p>
         <p
           style={{
-            fontSize: "35px",
+            fontSize: "30px",
             color: "#4E4E4E",
             margin: "0",
-            marginBottom: "80px",
+            marginBottom: "60px",
           }}
         >
           {props.typesubtitle}
@@ -38,15 +38,15 @@ export default function Emo(props: EmoProps) {
           src={props.imgemo}
           alt="emoticon"
           style={{
-            width: "463px",
-            height: "463px",
+            width: "380px",
+            height: "380px",
             margin: "0",
-            marginBottom: "50px",
+            marginBottom: "30px",
           }}
         />
         <p
           style={{
-            fontSize: "32px",
+            fontSize: "27px",
             color: "#E10CA1",
             margin: "0",
             marginBottom: "12px",
@@ -56,7 +56,7 @@ export default function Emo(props: EmoProps) {
         </p>
         <p
           style={{
-            fontSize: "32px",
+            fontSize: "28px",
             color: "#4E4E4E",
             margin: "0",
             whiteSpace: "pre-line",

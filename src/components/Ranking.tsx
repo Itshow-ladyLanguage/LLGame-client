@@ -14,7 +14,7 @@ export default function Ranking(props: any) {
     <div>
       <div
         style={{
-          width: "1410px",
+          width: "1300px",
           minHeight: "284px",
           backgroundColor: "#E10CA1",
           borderRadius: "64px",
@@ -26,8 +26,8 @@ export default function Ranking(props: any) {
         <button
           style={{
             marginTop: "101px",
-            width: "1146px",
-            height: "127px",
+            width: "1087px",
+            height: "120px",
             border: "3px solid #7a1d36",
             borderTopLeftRadius: "25px",
             borderTopRightRadius: "25px",
