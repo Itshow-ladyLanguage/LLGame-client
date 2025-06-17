@@ -37,9 +37,8 @@ function FixedHeaderPage(): React.ReactElement {
           alignItems: "center",
           transition: "all 0.3s ease",
           paddingTop: scrolled ? "0px" : "55px",
-          cursor: "pointer",
+          boxShadow: scrolled ? "0 2px 10px rgba(0,0,0,0.1)" : "none",
         }}
-        onClick={handleClick}
       >
         <div
           style={{
@@ -47,7 +46,9 @@ function FixedHeaderPage(): React.ReactElement {
             alignItems: "center",
             gap: "20px",
             marginLeft: "141px",
+            cursor: "pointer",
           }}
+          onClick={handleClick}
         >
           <img
             src="/images/arrow.png"
@@ -65,7 +66,7 @@ function FixedHeaderPage(): React.ReactElement {
         </div>
       </header>
 
-      <div style={{ marginTop: "630px", marginBottom: "1000px", }}>
+      <div style={{ marginTop: "630px", marginBottom: "1000px" }}>
         <Pyramid />
       </div>
 

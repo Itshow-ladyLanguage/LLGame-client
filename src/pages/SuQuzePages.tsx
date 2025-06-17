@@ -106,7 +106,7 @@ export default function SuQuizPages() {
           alignItems: "center",
         }}
       >
-        퀴즈 데이터를 불러오는 중...
+        {/* 퀴즈 데이터를 불러오는 중... */}
       </div>
     );
   }
@@ -123,7 +123,7 @@ export default function SuQuizPages() {
         alignItems: "center",
       }}
     >
-      <div style={{ marginBottom: "28px" }}>
+      <div style={{ marginBottom: "35px" }}>
         <Bar timeLeft={timeLeft} />
       </div>
       <Subjective question={currentQuiz.question} />
@@ -136,7 +136,7 @@ export default function SuQuizPages() {
           quizId={currentQuiz?.id || `quiz-${currentIndex}`}
         />
       </div>
-      <div style={{ marginTop: "35px"}}>
+      <div style={{ marginTop: "35px" }}>
         <PageNumber current={currentIndex + 10} total={quizData.length} />
       </div>
     </div>

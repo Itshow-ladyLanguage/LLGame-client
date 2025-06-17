@@ -109,7 +109,7 @@ export default function OXQuizPages() {
           alignItems: "center",
         }}
       >
-        퀴즈 데이터를 불러오는 중...
+        {/* 퀴즈 데이터를 불러오는 중... */}
       </div>
     );
   }
@@ -126,7 +126,7 @@ export default function OXQuizPages() {
           alignItems: "center",
         }}
       >
-        퀴즈 완료! 결과 페이지로 이동 중...
+        {/* 퀴즈 완료! 결과 페이지로 이동 중... */}
       </div>
     );
   }
@@ -142,7 +142,7 @@ export default function OXQuizPages() {
       }}
     >
       {/* 시간 바 컴포넌트 */}
-      <div style={{ marginBottom: "28px" }}>
+      <div style={{ marginBottom: "35px" }}>
         <Bar timeLeft={timeLeft} />
       </div>
 

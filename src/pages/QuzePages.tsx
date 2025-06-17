@@ -147,7 +147,7 @@ export default function QuzeContainer() {
         alignItems: "center",
       }}
     >
-      <div style={{ marginBottom: "28px" }}>
+      <div style={{ marginBottom: "35px" }}>
         <Bar timeLeft={timeLeft} />
       </div>
       <Quzelook question={currentQuiz.question} />
