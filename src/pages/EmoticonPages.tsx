@@ -102,7 +102,7 @@ function FixedHeaderPage(): React.ReactElement {
         </div>
       </header>
 
-      <div style={{ marginTop: "630px", marginBottom: "1000px" }}>
+      <div style={{ marginTop: "630px", marginBottom: "1000px", marginRight: "75px" }}>
         <Pyramid />
       </div>
 
