@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Routes, Route, HashRouter } from "react-router-dom";
+import React from "react";
+import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Camera from "./pages/Camera";
 import QuzePages from "./pages/QuzePages";
@@ -12,26 +12,24 @@ import EmoticonPages from "./pages/EmoticonPages";
 import LoadImageFromFirebase from "./pages/LoadImageFromFirebase";
 import CoverPages from "./pages/CoverPages";
 import OXQuizPages from "./pages/OXQuizPages";
+
 const App = () => {
   return (
-    <HashRouter>
     <Routes>
       <Route path="/" element={<CoverPages />} />
-      <Route path="/CoverPages" element={<CoverPages />} /> {/* 첫페이지 */}
-      <Route path="/login" element={<Login />} /> {/* 로그인페이지 */}
-      <Route path="/camera" element={<Camera />} /> {/* 사진찍는페이지 */}
-      <Route path="/QuzePages" element={<QuzePages />} /> {/*문제객관식*/}
-      <Route path="/RankingPages" element={<RankingPages />} /> {/*랭킹페이지*/}
-      <Route path="/Result" element={<Result />} /> {/*결과 페이지*/}
-      <Route path="/ResultPages" element={<ResultPages />} /> {/*결과 페이지*/}
-      <Route path="/SuQuzePages" element={<SuQuzePages />} /> {/*결과 페이지*/}
-      <Route path="/Emoticon" element={<Emoticon />} /> {/*결과 페이지*/}
-      <Route path="/Emo" element={<EmoticonPages />} /> {/*결과 페이지*/}
-      <Route path="/SuQuzePages" element={<SuQuzePages />} /> {/*문제주관식*/}
-      <Route path="/OXQuizPages" element={<OXQuizPages />} /> {/*문제 OX*/}
-      <Route path="/Up" element={<LoadImageFromFirebase />} /> {/*문제 OX*/}
+      <Route path="/CoverPages" element={<CoverPages />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/camera" element={<Camera />} />
+      <Route path="/QuzePages" element={<QuzePages />} />
+      <Route path="/RankingPages" element={<RankingPages />} />
+      <Route path="/Result" element={<Result />} />
+      <Route path="/ResultPages" element={<ResultPages />} />
+      <Route path="/SuQuzePages" element={<SuQuzePages />} />
+      <Route path="/Emoticon" element={<Emoticon />} />
+      <Route path="/Emo" element={<EmoticonPages />} />
+      <Route path="/OXQuizPages" element={<OXQuizPages />} />
+      <Route path="/Up" element={<LoadImageFromFirebase />} />
     </Routes>
-    </HashRouter>
   );
 };
 
