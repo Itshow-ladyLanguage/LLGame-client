@@ -8,9 +8,11 @@ export default function CoverButton() {
     <div style={{ display: "flex", justifyContent: "center" }}>
       <div
         style={{
-          display: "flex",
-          flexDirection: "row",
-          gap: "14px",
+         display: "flex",
+         flexDirection: "row",
+         gap: "14px",
+        //  position: "relative",
+        //  top:"200px"
         }}
       >
         <CoverButtonDesign
