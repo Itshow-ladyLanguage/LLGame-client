@@ -81,14 +81,14 @@ export default function CoverPages() {
           display: "flex",
           justifyContent: "center",
           position: "relative",
-          top: "40px", // 원하는 만큼만 아래로 이동
+          top: "40px", 
         }}
       >
         <img
           src="/Cover/llgame.png"
           style={{
-            width: "908px",
-            height: "556px",
+            width: "auto",
+            height: "auto",
             marginTop: "90px",
           }}
         />

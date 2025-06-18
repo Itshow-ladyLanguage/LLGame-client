@@ -42,7 +42,7 @@ export default function ResultPages() {
     document.body.style.margin = "0";
 
     const capture = async () => {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 5000));
       const canvas = await html2canvas(document.body);
       const imgUrl = canvas.toDataURL("image/jpg");
 
