@@ -9,46 +9,42 @@ const Login = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<any>(null);
   const [isHovered, setIsHovered] = useState(false);
 
   // 줌 방지 기능
   useEffect(() => {
-    // 키보드 줌 방지 (Ctrl + +/-, Ctrl + 0)
     const handleKeyDown = (e: KeyboardEvent) => {
       if (
         e.ctrlKey &&
-        (e.keyCode === 61 || // Ctrl + +
-          e.keyCode === 107 || // Numpad +
-          e.keyCode === 173 || // Ctrl + -
-          e.keyCode === 109 || // Numpad -
-          e.keyCode === 187 || // Ctrl + =
-          e.keyCode === 189 || // Ctrl + -
-          e.keyCode === 48) // Ctrl + 0
+        (e.keyCode === 61 ||
+          e.keyCode === 107 ||
+          e.keyCode === 173 ||
+          e.keyCode === 109 ||
+          e.keyCode === 187 ||
+          e.keyCode === 189 ||
+          e.keyCode === 48)
       ) {
         e.preventDefault();
       }
     };
 
-    // 마우스 휠 줌 방지 (Ctrl + 휠)
     const handleWheel = (e: WheelEvent) => {
       if (e.ctrlKey) {
         e.preventDefault();
       }
     };
 
-    // 이벤트 리스너 등록
     document.addEventListener("keydown", handleKeyDown);
     document.addEventListener("wheel", handleWheel, { passive: false });
 
-    // 클린업
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("wheel", handleWheel);
     };
   }, []);
 
-  const handleNameChange = (e) => {
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     if (value.length <= 7) {
       setName(value);
@@ -67,16 +63,13 @@ const Login = () => {
       });
       console.log("유저 생성 성공", res.data);
 
-      // 로컬스토리지에 유저 ID 저장
       localStorage.setItem("userId", res.data.id);
-      console.log(localStorage.getItem("userId"));
-      console.log(localStorage.getItem("userId"));
+      localStorage.setItem("userEmail", email);
 
-      // 페이지 이동
       navigate("/camera");
     } catch (e) {
       console.error("유저 생성 실패 : ", e);
-      setError(error);
+      setError(e);
     } finally {
       setLoading(false);
     }
@@ -125,11 +118,12 @@ const Login = () => {
           >
             <img
               src="/images/camera.png"
+              alt="카메라 아이콘"
               style={{
                 width: "48px",
                 height: "43px",
               }}
-            ></img>
+            />
           </div>
         </div>
         <div
@@ -180,7 +174,7 @@ const Login = () => {
             marginTop: "30px",
             marginRight: "10%",
             cursor: "pointer",
-            transition: "background-color 0.3s ease", // 부드러운 전환
+            transition: "background-color 0.3s ease",
           }}
         >
           시작하기
