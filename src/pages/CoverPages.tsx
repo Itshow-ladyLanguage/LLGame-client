@@ -41,8 +41,6 @@ export default function CoverPages() {
     <div
       style={{
         position: "relative",
-        overflowX: "hidden",
-        maxWidth: "100vw",
       }}
     >
       <div
@@ -83,7 +81,7 @@ export default function CoverPages() {
           display: "flex",
           justifyContent: "center",
           position: "relative",
-          top: "40px", 
+          top: "40px", // 원하는 만큼만 아래로 이동
         }}
       >
         <img
