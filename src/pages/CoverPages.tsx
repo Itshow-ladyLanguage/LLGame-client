@@ -41,6 +41,8 @@ export default function CoverPages() {
     <div
       style={{
         position: "relative",
+        height: "1080px",
+        overflow: "hidden",
       }}
     >
       <div
@@ -52,7 +54,7 @@ export default function CoverPages() {
         <span
           style={{
             position: "absolute",
-            marginTop: "55px",
+            marginTop: "40px",
             marginLeft: "1550px",
             color: "#E10CA1",
             fontSize: "28.95px",
@@ -72,7 +74,7 @@ export default function CoverPages() {
             backgroundColor: "#E10CA1",
             width: "1700px",
             height: "3px",
-            marginTop: "105.46px",
+            marginTop: "80px",
           }}
         />
       </div>
@@ -81,7 +83,7 @@ export default function CoverPages() {
           display: "flex",
           justifyContent: "center",
           position: "relative",
-          top: "40px", // 원하는 만큼만 아래로 이동
+          top: "30px",
         }}
       >
         <img
@@ -89,7 +91,7 @@ export default function CoverPages() {
           style={{
             width: "908px",
             height: "556px",
-            marginTop: "90px",
+            marginTop: "60px",
           }}
         />
       </div>
@@ -104,7 +106,7 @@ export default function CoverPages() {
           style={{
             width: "200px",
             height: "84px",
-            marginTop: "-600px",
+            marginTop: "-480px",
             marginRight: "1400px",
           }}
         />
@@ -120,7 +122,7 @@ export default function CoverPages() {
           style={{
             width: "250px",
             height: "149px",
-            marginTop: "-550px",
+            marginTop: "-450px",
             marginLeft: "1300px",
           }}
         />
@@ -136,7 +138,7 @@ export default function CoverPages() {
           style={{
             width: "217px",
             height: "184px",
-            marginTop: "-220px",
+            marginTop: "-180px",
             marginRight: "1200px",
           }}
         />
@@ -152,7 +154,7 @@ export default function CoverPages() {
           style={{
             width: "1920px",
             height: "610px",
-            marginTop: "-270px",
+            marginTop: "-220px",
           }}
         />
       </div>
@@ -167,7 +169,7 @@ export default function CoverPages() {
           style={{
             width: "175px",
             height: "98px",
-            marginTop: "-650px",
+            marginTop: "-520px",
             marginLeft: "1100px",
           }}
         />
@@ -185,7 +187,7 @@ export default function CoverPages() {
           style={{
             width: "200px",
             height: "84px",
-            marginTop: "-400px",
+            marginTop: "-320px",
             marginLeft: "1690px",
           }}
         />
@@ -194,7 +196,7 @@ export default function CoverPages() {
         style={{
           display: "flex",
           justifyContent: "center",
-          marginTop: "-310px",
+          marginTop: "-250px",
         }}
       >
         <CoverButton />
