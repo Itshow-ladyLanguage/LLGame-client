@@ -7,6 +7,41 @@ import { ref, uploadString } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 
 export default function ResultPages() {
+  // 줌 방지 기능
+  useEffect(() => {
+    // 키보드 줌 방지 (Ctrl + +/-, Ctrl + 0)
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (
+        e.ctrlKey &&
+        (e.keyCode === 61 || // Ctrl + +
+          e.keyCode === 107 || // Numpad +
+          e.keyCode === 173 || // Ctrl + -
+          e.keyCode === 109 || // Numpad -
+          e.keyCode === 187 || // Ctrl + =
+          e.keyCode === 189 || // Ctrl + -
+          e.keyCode === 48) // Ctrl + 0
+      ) {
+        e.preventDefault();
+      }
+    };
+
+    // 마우스 휠 줌 방지 (Ctrl + 휠)
+    const handleWheel = (e: WheelEvent) => {
+      if (e.ctrlKey) {
+        e.preventDefault();
+      }
+    };
+
+    // 이벤트 리스너 등록
+    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("wheel", handleWheel, { passive: false });
+
+    // 클린업
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("wheel", handleWheel);
+    };
+  }, []);
   const hasCaptured = useRef(false); // 컴포넌트를 가져와서 쓰기 때문에 useEffect가 두 번 실행되어 사진이 두 개 저장되는 걸 방지
 
   useEffect(() => {
