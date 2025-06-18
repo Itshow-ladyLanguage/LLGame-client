@@ -22,6 +22,42 @@ const Camera = () => {
     facingMode: "user",
   };
 
+  // 줌 방지 기능
+  useEffect(() => {
+    // 키보드 줌 방지 (Ctrl + +/-, Ctrl + 0)
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (
+        e.ctrlKey &&
+        (e.keyCode === 61 || // Ctrl + +
+          e.keyCode === 107 || // Numpad +
+          e.keyCode === 173 || // Ctrl + -
+          e.keyCode === 109 || // Numpad -
+          e.keyCode === 187 || // Ctrl + =
+          e.keyCode === 189 || // Ctrl + -
+          e.keyCode === 48) // Ctrl + 0
+      ) {
+        e.preventDefault();
+      }
+    };
+
+    // 마우스 휠 줌 방지 (Ctrl + 휠)
+    const handleWheel = (e: WheelEvent) => {
+      if (e.ctrlKey) {
+        e.preventDefault();
+      }
+    };
+
+    // 이벤트 리스너 등록
+    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("wheel", handleWheel, { passive: false });
+
+    // 클린업
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("wheel", handleWheel);
+    };
+  }, []);
+
   useEffect(() => {
     if (timer > 0) {
       const timerID = setTimeout(() => setTimer(timer - 1), 1000);
@@ -40,7 +76,6 @@ const Camera = () => {
               `${import.meta.env.VITE_BASE_URL}/users/${userId}`,
               {
                 profile_image: downloadURL,
-                
               }
             );
           })

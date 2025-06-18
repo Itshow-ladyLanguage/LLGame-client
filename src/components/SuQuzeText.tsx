@@ -209,7 +209,7 @@ export default function SuQuzeText({
                 fontWeight: "bold",
                 pointerEvents: "none",
                 position: "absolute",
-                left: "52%",
+                left: "53%",
                 top: "50%",
                 transform: "translate(-50%, -50%)",
                 textShadow: "0 0 10px rgba(225, 12, 161, 0.5)",

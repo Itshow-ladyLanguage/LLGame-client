@@ -16,6 +16,7 @@ export default function CoverButtonDesign(props: {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       style={{
+        marginTop: "60px",
         width: "420px",
         height: "86px",
         borderRadius: "18px",
