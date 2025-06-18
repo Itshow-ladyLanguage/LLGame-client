@@ -41,6 +41,8 @@ export default function CoverPages() {
     <div
       style={{
         position: "relative",
+        overflowX: "hidden",
+        maxWidth: "100vw",
       }}
     >
       <div
@@ -87,8 +89,8 @@ export default function CoverPages() {
         <img
           src="/Cover/llgame.png"
           style={{
-            width: "50vw",
-            height: "auto",
+            width: "908px",
+            height: "556px",
             marginTop: "90px",
           }}
         />
