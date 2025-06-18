@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, HashRouter } from "react-router-dom";
 import Login from "./pages/Login";
 import Camera from "./pages/Camera";
 import QuzePages from "./pages/QuzePages";
@@ -14,7 +14,9 @@ import CoverPages from "./pages/CoverPages";
 import OXQuizPages from "./pages/OXQuizPages";
 const App = () => {
   return (
+    <HashRouter>
     <Routes>
+      <Route path="/" element={<CoverPages />} />
       <Route path="/CoverPages" element={<CoverPages />} /> {/* 첫페이지 */}
       <Route path="/login" element={<Login />} /> {/* 로그인페이지 */}
       <Route path="/camera" element={<Camera />} /> {/* 사진찍는페이지 */}
@@ -29,6 +31,7 @@ const App = () => {
       <Route path="/OXQuizPages" element={<OXQuizPages />} /> {/*문제 OX*/}
       <Route path="/Up" element={<LoadImageFromFirebase />} /> {/*문제 OX*/}
     </Routes>
+    </HashRouter>
   );
 };
 
