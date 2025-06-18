@@ -87,7 +87,7 @@ export default function CoverPages() {
         <img
           src="/Cover/llgame.png"
           style={{
-            width: "auto",
+            width: "50vw",
             height: "auto",
             marginTop: "90px",
           }}
