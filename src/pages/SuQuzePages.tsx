@@ -157,39 +157,26 @@ export default function SuQuizPages() {
 
       <Subjective question={currentQuiz.question} />
 
-      {/* 텍스트와 이미지를 수평 정렬 */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "flex-start",
-          gap: "40px",
-          marginTop: "40px",
-          flexWrap: "wrap",
-        }}
-      >
-        {/* 텍스트 입력창 */}
-        <div>
-          <SuQuzeText
-            onAnswered={handleAnswered}
-            clicked={clicked}
-            setClicked={setClicked}
-            resetTrigger={resetTrigger}
-            quizId={currentQuiz?.id || `quiz-${currentIndex}`}
-          />
-        </div>
+      {currentQuiz.question === "Q 다음 대화에서 여자가 화난 이유는?" && (
+        <img
+          src="/images/talk.png"
+          alt="대화 이미지"
+          style={{
+            marginTop: "20px",
+            width: "300px",
+            borderRadius: "8px",
+          }}
+        />
+      )}
 
-        {/* 이미지 */}
-        {currentQuiz.question === "Q 다음 대화에서 여자가 화난 이유는?" && (
-          <img
-            src="/images/talk.png"
-            alt="대화 이미지"
-            style={{
-              width: "300px",
-              borderRadius: "8px",
-            }}
-          />
-        )}
+      <div style={{ marginTop: "87.5px" }}>
+        <SuQuzeText
+          onAnswered={handleAnswered}
+          clicked={clicked}
+          setClicked={setClicked}
+          resetTrigger={resetTrigger}
+          quizId={currentQuiz?.id || `quiz-${currentIndex}`}
+        />
       </div>
 
       <div style={{ marginTop: "35px" }}>
