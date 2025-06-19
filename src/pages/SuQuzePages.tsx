@@ -155,29 +155,30 @@ export default function SuQuizPages() {
         <Bar timeLeft={timeLeft} />
       </div>
 
-      <Subjective question={currentQuiz.question} />
+      <div style={{ display: "flex", alignItems: "flex-start", marginTop: "20px" }}>
+        <div style={{ flex: 1 }}>
+          <SuQuzeText
+            onAnswered={handleAnswered}
+            clicked={clicked}
+            setClicked={setClicked}
+            resetTrigger={resetTrigger}
+            quizId={currentQuiz?.id || `quiz-${currentIndex}`}
+          />
+        </div>
 
-      {currentQuiz.question === "Q 다음 대화에서 여자가 화난 이유는?" && (
-        <img
-          src="/images/talk.png"
-          alt="대화 이미지"
-          style={{
-            marginTop: "20px",
-            width: "300px",
-            borderRadius: "8px",
-          }}
-        />
-      )}
-
-      <div style={{ marginTop: "87.5px" }}>
-        <SuQuzeText
-          onAnswered={handleAnswered}
-          clicked={clicked}
-          setClicked={setClicked}
-          resetTrigger={resetTrigger}
-          quizId={currentQuiz?.id || `quiz-${currentIndex}`}
-        />
+        {currentQuiz.question === "Q 다음 대화에서 여자가 화난 이유는?" && (
+          <img
+            src="/images/talk.png"
+            alt="대화 이미지"
+            style={{
+              width: "300px",
+              borderRadius: "8px",
+              marginLeft: "20px",
+            }}
+          />
+        )}
       </div>
+
 
       <div style={{ marginTop: "35px" }}>
         <PageNumber current={currentIndex + 10} total={quizData.length} />
