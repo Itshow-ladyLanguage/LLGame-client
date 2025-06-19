@@ -8,7 +8,7 @@ import SuQuzeText from "../components/SuQuzeText";
 import Subjective from "../components/Subjective";
 
 type SuQuizType = {
-  id?: string; // id 필드 추가 (옵셔널)
+  id?: string;
   type: string;
   question: string;
   answer: string;
@@ -26,45 +26,40 @@ export default function SuQuizPages() {
 
   // 줌 방지 기능
   useEffect(() => {
-    // 키보드 줌 방지 (Ctrl + +/-, Ctrl + 0)
     const handleKeyDown = (e: KeyboardEvent) => {
       if (
         e.ctrlKey &&
-        (e.keyCode === 61 || // Ctrl + +
-          e.keyCode === 107 || // Numpad +
-          e.keyCode === 173 || // Ctrl + -
-          e.keyCode === 109 || // Numpad -
-          e.keyCode === 187 || // Ctrl + =
-          e.keyCode === 189 || // Ctrl + -
-          e.keyCode === 48) // Ctrl + 0
+        (e.keyCode === 61 ||
+          e.keyCode === 107 ||
+          e.keyCode === 173 ||
+          e.keyCode === 109 ||
+          e.keyCode === 187 ||
+          e.keyCode === 189 ||
+          e.keyCode === 48)
       ) {
         e.preventDefault();
       }
     };
 
-    // 마우스 휠 줌 방지 (Ctrl + 휠)
     const handleWheel = (e: WheelEvent) => {
       if (e.ctrlKey) {
         e.preventDefault();
       }
     };
 
-    // 이벤트 리스너 등록
     document.addEventListener("keydown", handleKeyDown);
     document.addEventListener("wheel", handleWheel, { passive: false });
 
-    // 클린업
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("wheel", handleWheel);
     };
   }, []);
 
-  // 이전 페이지에서 받은 점수 처리
+  // 점수 초기화
   const initialScore = Number(location.state?.initialScore ?? 0);
   const [totalScore, setTotalScore] = useState<number>(initialScore);
 
-  // 디버깅용: 전달받은 초기 점수 로그
   useEffect(() => {
     console.log("SuQuizPages 시작 - 전달받은 초기 점수:", initialScore);
     console.log("location.state:", location.state);
@@ -108,7 +103,6 @@ export default function SuQuizPages() {
     if (currentIndex + 1 < quizData.length) {
       setCurrentIndex(currentIndex + 1);
     } else {
-      // 모든 주관식 퀴즈 완료 - 결과 페이지로 이동하며 최종 점수 전달
       console.log("주관식 퀴즈 완료 - 최종 누적 점수:", totalScore);
       navigate("/ResultPages", {
         state: {
@@ -118,7 +112,6 @@ export default function SuQuizPages() {
     }
   };
 
-  // SuQuzeText에서 점수를 받아와서 누적하는 함수 (시간 보너스 제거)
   const handleAnswered = (receivedScore: number) => {
     setTotalScore((prev) => {
       const newTotal = prev + receivedScore;
@@ -126,10 +119,9 @@ export default function SuQuizPages() {
       return newTotal;
     });
 
-    // 다음 문제로 이동
     setTimeout(() => {
       goToNextQuestion();
-    }, 1000); // SuQuzeText에서 이미 3초 + 1초 대기하므로 추가 대기 없이 바로 이동
+    }, 1000);
   };
 
   if (quizData.length === 0) {
@@ -147,7 +139,6 @@ export default function SuQuizPages() {
     );
   }
 
-  // 현재 퀴즈 가져오기
   const currentQuiz = quizData[currentIndex];
 
   return (
@@ -163,16 +154,31 @@ export default function SuQuizPages() {
       <div style={{ marginBottom: "35px" }}>
         <Bar timeLeft={timeLeft} />
       </div>
+
       <Subjective question={currentQuiz.question} />
+
+      {currentQuiz.question === "Q 다음 대화에서 여자가 화난 이유는?" && (
+        <img
+          src="/images/talk.png"
+          alt="대화 이미지"
+          style={{
+            marginTop: "20px",
+            width: "300px",
+            borderRadius: "8px",
+          }}
+        />
+      )}
+
       <div style={{ marginTop: "87.5px" }}>
         <SuQuzeText
-          onAnswered={handleAnswered} // 점수를 파라미터로 받는 함수로 변경
+          onAnswered={handleAnswered}
           clicked={clicked}
           setClicked={setClicked}
           resetTrigger={resetTrigger}
           quizId={currentQuiz?.id || `quiz-${currentIndex}`}
         />
       </div>
+
       <div style={{ marginTop: "35px" }}>
         <PageNumber current={currentIndex + 10} total={quizData.length} />
       </div>
