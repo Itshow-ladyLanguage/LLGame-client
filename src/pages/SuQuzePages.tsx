@@ -157,20 +157,24 @@ export default function SuQuizPages() {
 
         <Subjective question={currentQuiz.question} />
 
-        <div style={{ marginTop: "30px" }}>
-          {currentQuiz.question === "Q 다음 대화에서 여자가 화난 이유는?" && (
+        {/* 이미지 섹션: 텍스트 입력창보다 위에 있도록 이 위치에 배치 */}
+        {currentQuiz.question === "Q 다음 대화에서 여자가 화난 이유는?" && (
+          <div style={{ marginTop: "30px", marginBottom: "20px" }}>
             <img
               src="/images/talk.png"
               alt="대화 이미지"
               style={{
                 width: "300px",
                 borderRadius: "8px",
+                display: "block",
+                margin: "0 auto",
               }}
             />
-          )}
-        </div>
+          </div>
+        )}
 
-        <div style={{ marginTop: "30px" }}>
+        {/* 텍스트 입력창 */}
+        <div style={{ marginTop: "20px" }}>
           <SuQuzeText
             onAnswered={handleAnswered}
             clicked={clicked}
@@ -179,6 +183,7 @@ export default function SuQuizPages() {
             quizId={currentQuiz?.id || `quiz-${currentIndex}`}
           />
         </div>
+
 
 
       <div style={{ marginTop: "35px" }}>
