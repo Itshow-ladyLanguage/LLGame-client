@@ -157,7 +157,7 @@ export default function SuQuizPages() {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        lineHeight: "0.7",
+        lineHeight: "1.0",
       }}
     >
       <div style={{ marginBottom: "35px" }}>

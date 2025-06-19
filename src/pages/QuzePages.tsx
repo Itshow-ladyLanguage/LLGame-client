@@ -180,7 +180,6 @@ export default function QuzeContainer() {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        lineHeight: "0.7",
       }}
     >
       <div style={{ marginBottom: "35px" }}>
@@ -201,7 +200,6 @@ export default function QuzeContainer() {
           display: "flex",
           justifyContent: "center",
           marginTop: "35px",
-          lineHeight: "0.7",
         }}
       >
         <PageNumber current={currentQuizIndex + 1} total={quizData.length} />
