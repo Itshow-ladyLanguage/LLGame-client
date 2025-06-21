@@ -152,33 +152,38 @@ const Login = () => {
             className="input-box"
           />
         </div>
-        <button
-          onClick={postUser}
-          type="submit"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-          style={{
-            width: "150px",
-            height: "55px",
-            borderRadius: "15px",
-            backgroundColor: isHovered ? "#F0B1DD" : "#F7F7F7",
-            border: "3px solid #E10CA1",
-            outline: "none",
-            color: "#E10CA1",
-            fontSize: "25px",
-            fontFamily: "'Pretendard-Regular', sans-serif",
-            fontWeight: 700,
-            textAlign: "center",
-            marginLeft: "auto",
-            display: "block",
-            marginTop: "30px",
-            marginRight: "10%",
-            cursor: "pointer",
-            transition: "background-color 0.3s ease",
-          }}
-        >
-          시작하기
-        </button>
+      <button
+  onClick={postUser}
+  type="submit"
+  disabled={loading} // ← 버튼 비활성화 조건
+  onMouseEnter={() => setIsHovered(true)}
+  onMouseLeave={() => setIsHovered(false)}
+  style={{
+    width: "150px",
+    height: "55px",
+    borderRadius: "15px",
+    backgroundColor: loading
+      ? "#ddd" // 비활성화 시 회색
+      : isHovered
+      ? "#F0B1DD"
+      : "#F7F7F7",
+    border: "3px solid #E10CA1",
+    outline: "none",
+    color: loading ? "#aaa" : "#E10CA1", // 글자색도 흐리게
+    fontSize: "25px",
+    fontFamily: "'Pretendard-Regular', sans-serif",
+    fontWeight: 700,
+    textAlign: "center",
+    marginLeft: "auto",
+    display: "block",
+    marginTop: "30px",
+    marginRight: "10%",
+    cursor: loading ? "not-allowed" : "pointer", // 클릭 안 되는 느낌
+    transition: "background-color 0.3s ease",
+  }}
+>
+  {loading ? "처리 중..." : "시작하기"}
+</button>
       </div>
     </div>
   );

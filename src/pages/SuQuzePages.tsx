@@ -157,18 +157,6 @@ export default function SuQuizPages() {
 
       <Subjective question={currentQuiz.question} />
 
-      {currentQuiz.question === "Q 다음 대화에서 여자가 화난 이유는?" && (
-        <img
-          src="/images/talk.png"
-          alt="대화 이미지"
-          style={{
-            marginTop: "20px",
-            width: "300px",
-            borderRadius: "8px",
-          }}
-        />
-      )}
-
       <div style={{ marginTop: "87.5px" }}>
         <SuQuzeText
           onAnswered={handleAnswered}
